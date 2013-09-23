@@ -17,13 +17,27 @@ TEST_F(KiwiJuiceEasyTest, sample) {
 	EXPECT_EQ("Fizz", "Fizz");
 }
 
-TEST_F(KiwiJuiceEasyTest, vector) {
-	vector <int> vect1, vect2;
-	vect1.push_back(1);
-	vect1.push_back(2);
-	vect2.push_back(1);
-	vect2.push_back(2);
-	
-	EXPECT_EQ(vect1, vect2);
+TEST_F(KiwiJuiceEasyTest, toOver) {
+	vector <int> capacities, bottles, fromId, toId;
+	capacities.push_back(10);
+	capacities.push_back(10);
+
+	bottles.push_back(5);
+	bottles.push_back(8);
+
+	fromId.push_back(0);
+
+	toId.push_back(1);
+
+	vector <int> expected, actual;
+	KiwiJuiceEasy *sut;
+	sut = new KiwiJuiceEasy();
+
+	expected.push_back(3);
+	expected.push_back(10);
+	actual = sut->thePouring(capacities, bottles, fromId, toId);
+	delete sut;
+
+	EXPECT_EQ(expected, actual);
 }
 
