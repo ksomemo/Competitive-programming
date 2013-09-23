@@ -16,7 +16,6 @@ public:
 				bottles[from] -= diff;
 				bottles[to] += diff;
 
-				break;
 			} else {
 				bottles[to] += bottles[from];
 				bottles[from] = 0;
