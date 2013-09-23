@@ -1,9 +1,10 @@
 #include "chapter4/KiwiJuiceEasy.cpp"
 #include "gtest/gtest.h"
+#include <stdio.h>
 
 class KiwiJuiceEasyTest : public ::testing::Test {
 protected:
-	KiwiJuiceEasy *sut;
+	KiwiJuiceEasy* sut;
 
 	KiwiJuiceEasyTest() {
 	}
