@@ -3,13 +3,20 @@
 
 class KiwiJuiceEasyTest : public ::testing::Test {
 protected:
+	KiwiJuiceEasy *sut;
+
 	KiwiJuiceEasyTest() {
 	}
+
 	virtual ~KiwiJuiceEasyTest() {
 	}
+
 	virtual void SetUp() {
+		sut = new KiwiJuiceEasy();
 	}
+
 	virtual void TearDown() {
+		delete sut;
 	}
 };
 
@@ -30,13 +37,9 @@ TEST_F(KiwiJuiceEasyTest, toOver) {
 	toId.push_back(1);
 
 	vector <int> expected, actual;
-	KiwiJuiceEasy *sut;
-	sut = new KiwiJuiceEasy();
-
 	expected.push_back(3);
 	expected.push_back(10);
 	actual = sut->thePouring(capacities, bottles, fromId, toId);
-	delete sut;
 
 	EXPECT_EQ(expected, actual);
 }
@@ -54,13 +57,9 @@ TEST_F(KiwiJuiceEasyTest, toUnfulfilled) {
 	toId.push_back(1);
 
 	vector <int> expected, actual;
-	KiwiJuiceEasy *sut;
-	sut = new KiwiJuiceEasy();
-
 	expected.push_back(0);
 	expected.push_back(13);
 	actual = sut->thePouring(capacities, bottles, fromId, toId);
-	delete sut;
 
 	EXPECT_EQ(expected, actual);
 }
