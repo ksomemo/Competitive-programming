@@ -35,6 +35,7 @@ TEST_F(InterestingPartyTest, all) {
 	second.push_back("biting");
 
 	EXPECT_EQ(sut->bestInvitation(first, second), 4);
+	EXPECT_EQ(sut->bestInvitationVectorOnly(first, second), 4);
 }
 
 TEST_F(InterestingPartyTest, one) {

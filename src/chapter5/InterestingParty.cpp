@@ -36,5 +36,25 @@ public:
 
 		return maxCnt;
 	}
+
+	int bestInvitationVectorOnly(vector <string> first, vector <string> second) {
+		int maxCnt = 0;
+
+		for (int fi = 0; fi < first.size(); fi++) {
+			int fCnt = 0;
+			int sCnt = 0;
+			for (int si = 0; si < first.size(); si++) {
+				if ( first[fi] ==  first[si]) fCnt++;
+				if ( first[fi] == second[si]) fCnt++;
+				if (second[fi] ==  first[si]) sCnt++;
+				if (second[fi] == second[si]) sCnt++;
+			}
+
+			maxCnt = max(fCnt, maxCnt);
+			maxCnt = max(sCnt, maxCnt);
+		}
+
+		return maxCnt;
+	}
 };
 
