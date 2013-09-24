@@ -27,16 +27,12 @@ public:
 			int from = fromId[i];
 			int to = toId[i];
 
-			if (bottles[from] + bottles[to] >= capacities[i]) {
-				int diff = capacities[i] - bottles[to];
-				bottles[from] -= diff;
-				bottles[to] += diff;
+			int diff = (bottles[from] + bottles[to] >= capacities[i])
+					? capacities[i] - bottles[to]
+					: bottles[from];
 
-			} else {
-				int diff = bottles[from];
-				bottles[to] += diff;
-				bottles[from] -= diff;
-			}
+			bottles[from] -= diff;
+			bottles[to] += diff;
 		}
 
 		return bottles;
