@@ -63,5 +63,16 @@ TEST_F(CryptographyTest, BigNumbersNoOverFlow) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(CryptographyTest, allSameNumbers) {
+	std::vector <int> numbers;
+	numbers.push_back(1);
+	numbers.push_back(1);
+	numbers.push_back(1);
+	numbers.push_back(1);
 
+	long actual = sut->encrypt(numbers);
+	long expected = 2;
+
+	EXPECT_EQ(actual, expected);
+}
 
