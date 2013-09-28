@@ -26,6 +26,7 @@ TEST_F(InterestingDigitsTest, base10) {
 
 	std::vector <int> actual = sut->digits(base);
 	std::vector <int> actualMySimple = sut->digitsMySimple(base);
+	std::vector <int> actualSimple = sut->digitsSimple(base);
 
 	std::vector <int> expected;
 	expected.push_back(3);
@@ -33,6 +34,7 @@ TEST_F(InterestingDigitsTest, base10) {
 
 	EXPECT_EQ(actual, expected);
 	EXPECT_EQ(actualMySimple, expected);
+	EXPECT_EQ(actualSimple, expected);
 }
 
 TEST_F(InterestingDigitsTest, base3) {
@@ -40,11 +42,13 @@ TEST_F(InterestingDigitsTest, base3) {
 
 	std::vector <int> actual = sut->digits(base);
 	std::vector <int> actualMySimple = sut->digitsMySimple(base);
+	std::vector <int> actualSimple = sut->digitsSimple(base);
 
 	std::vector <int> expected;
 	expected.push_back(2);
 
 	EXPECT_EQ(actual, expected);
 	EXPECT_EQ(actualMySimple, expected);
+	EXPECT_EQ(actualSimple, expected);
 }
 

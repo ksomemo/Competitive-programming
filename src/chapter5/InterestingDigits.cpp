@@ -79,5 +79,26 @@ public:
 
 		return digits;
 	}
+
+	/**
+	 * a * n^2 + b * n + c
+	 * = a * n^2 + b * n + (a + b + c) -a -b
+	 * = (a * n^2 -a) + (b * n - b) + (a + b + c)
+	 * = a(n^2 - 1) + b(n - 1) + (a + b + c)
+	 * = {a(n + 1) + b}(n - 1) + (a + b + c)
+	 *
+	 * 基数から1引いた数で第一項がわり切れるときに、
+	 * 第二項も割り切れるならば、
+	 * 第二項の因数は、基数から1引いた数の因数である
+	 */
+	std::vector <int> digitsSimple(int base) {
+		std::vector <int> digits;
+
+		for (int i = 2; i < base; i++) {
+			if ( (base - 1) % i == 0) digits.push_back(i);
+		}
+
+		return digits;
+	}
 };
 
