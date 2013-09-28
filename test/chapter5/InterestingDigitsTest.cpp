@@ -31,3 +31,12 @@ TEST_F(InterestingDigitsTest, base10) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(InterestingDigitsTest, base3) {
+	int base = 3;
+	std::vector <int> actual = sut->digits(base);
+	std::vector <int> expected;
+	expected.push_back(2);
+
+	EXPECT_EQ(actual, expected);
+}
+
