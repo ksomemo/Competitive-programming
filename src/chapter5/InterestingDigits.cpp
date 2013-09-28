@@ -34,5 +34,50 @@ public:
 
 		return digits;
 	}
+
+	std::vector <int> digitsMySimple(int base) {
+		std::vector <int> digits;
+
+		int maxDigitOfNumber = 3;
+		for (int n = 2; n < base; n++) {
+			int num = 0;
+			bool ok = true;
+			while (true) {
+				num++;
+				// n倍判定
+				if (num % n != 0){
+					continue;
+				}
+
+				// 桁数を求める
+				int divined = num;
+				int sumDigits = 0;
+				int digitOfNumber = 0;
+				while (divined > 0) {
+					if (digitOfNumber >= maxDigitOfNumber) {
+						break;
+					}
+
+					sumDigits += divined % base;
+					divined = divined / base;
+					digitOfNumber++;
+				}
+
+				if (digitOfNumber >= maxDigitOfNumber) {
+					break;
+				}
+
+				// 桁数の総和と倍数判定
+				if (sumDigits % n != 0) {
+					ok = false;
+					break;
+				}
+			}
+
+			if (ok) digits.push_back(n);
+		}
+
+		return digits;
+	}
 };
 
