@@ -51,5 +51,21 @@ public:
 
 		return maxLen;
 	}
+
+	std::string makePalindrome(std::string s) {
+		int len = s.length();
+		int palindromeLen = find(s);
+
+		if (len == palindromeLen) return s;
+
+		std::string palindrome = "" + s;
+		int addLen = palindromeLen - len;
+		for (int i = addLen; i > 0; i--) {
+			// stringがイミュータブルなのかわかってない
+			palindrome += s[i - 1];
+		}
+
+		return palindrome;
+	}
 };
 

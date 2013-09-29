@@ -43,5 +43,6 @@ TEST_F(ThePalindromeTest, isNotPalindrome) {
 
 	EXPECT_EQ(actual, expected);
 	EXPECT_EQ(sut->findSampleBook(s), expected);
+	EXPECT_EQ(sut->makePalindrome(s), "ababa");
 }
 
