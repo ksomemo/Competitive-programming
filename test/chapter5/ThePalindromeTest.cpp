@@ -23,10 +23,12 @@ protected:
 
 TEST_F(ThePalindromeTest, isPalindrome) {
 	std::string s("abacaba");
+	std::string sShort("aba");
 
 	int actual = sut->find(s);
 	int expected = 7;
 
 	EXPECT_EQ(actual, expected);
+	EXPECT_EQ(sut->find(sShort), 3);
 }
 

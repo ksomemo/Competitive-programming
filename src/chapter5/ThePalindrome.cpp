@@ -3,7 +3,7 @@
 class ThePalindrome {
 public:
 	int find(std::string s) {
-		return 7;
+		return s.length();
 	}
 };
 
