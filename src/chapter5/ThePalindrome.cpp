@@ -32,5 +32,24 @@ public:
 		return posValid;
 	}
 
+	int findSampleBook(std::string s) {
+		int len = s.size();
+		int maxLen = len + (len - 1);
+
+		for (int i = len; i < maxLen; i++) {
+			bool sameChar = true;
+			for (int j = 0; j < len; j++) {
+				int posOtherSide = i - j -1;
+				if (posOtherSide < len && s[j] != s[posOtherSide]) {
+					sameChar = false;
+					break;
+				}
+			}
+
+			if (sameChar) return i;
+		}
+
+		return maxLen;
+	}
 };
 
