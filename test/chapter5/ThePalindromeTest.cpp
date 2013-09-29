@@ -32,3 +32,12 @@ TEST_F(ThePalindromeTest, isPalindrome) {
 	EXPECT_EQ(sut->find(sShort), 3);
 }
 
+TEST_F(ThePalindromeTest, isNotPalindrome) {
+	std::string s("abab");
+
+	int actual = sut->find(s);
+	int expected = 5;
+
+	EXPECT_EQ(actual, expected);
+}
+
