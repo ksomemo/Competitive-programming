@@ -34,3 +34,16 @@ TEST_F(FriendScoreTest, noFriend) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(FriendScoreTest, noExsitsFriendFriend) {
+	std::vector <std::string> friends;
+	friends.push_back("NYNN");
+	friends.push_back("YNNN");
+	friends.push_back("NNNY");
+	friends.push_back("NNYN");
+
+	int actual = sut->highestScore(friends);
+	int expected = 1;
+
+	EXPECT_EQ(actual, expected);
+}
+
