@@ -26,3 +26,9 @@ TEST_F(CrazyBotTest, OneStep) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(CrazyBotTest, twoStepAllCompassPoint) {
+	double actual = sut->getProbability(2, 25, 25, 25, 25);
+	double expected = 0.75;
+	EXPECT_EQ(actual, expected);
+}
+
