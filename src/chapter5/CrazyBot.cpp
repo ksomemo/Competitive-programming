@@ -11,20 +11,18 @@ public:
 		if (east >  0 && west == 0 && south == 0 && north >  0) return 1.0;
 		if (east == 0 && west >  0 && south == 0 && north >  0) return 1.0;
 
-		int pointPetternCnt = 4;
-		int success = 0;
-		int failure = 0;
-		for (int s1p = 0; s1p < pointPetternCnt - 1; s1p++) {
-			for (int s2p = 0; s2p < pointPetternCnt - 1; s2p++) {
-				if (s1p == s2p) {
-					failure++;
-				} else {
-					success++;
+		double probability = 0.0;
+		double pointProb[] = {east / 100.0, west / 100.0, south / 100.0, north / 100.0};
+		int pointPetternCnt = sizeof(pointProb) / sizeof(pointProb[0]);
+		for (int s1p = 0; s1p < pointPetternCnt; s1p++) {
+			for (int s2p = 0; s2p < pointPetternCnt; s2p++) {
+				if (s1p != s2p) {
+					probability += pointProb[s1p] * pointProb[s2p];
 				}
 			}
 		}
 
-		return (double)success / (pointPetternCnt * 2);
+		return probability;
 	}
 };
 
