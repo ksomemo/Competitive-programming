@@ -57,7 +57,7 @@ TEST_F(CrazyBotTest, sevenStepNoCross) {
 
 TEST_F(CrazyBotTest, 2StepWestAndEastEachProbDiff) {
 	double actual = sut->getProbability(2, 75, 25, 0, 0);
-	double expected = 0.375;
+	double expected = 0.625;
 	EXPECT_EQ(actual, expected);
 }
 
