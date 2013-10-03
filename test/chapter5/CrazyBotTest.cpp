@@ -61,3 +61,9 @@ TEST_F(CrazyBotTest, 2StepWestAndEastEachProbDiff) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(CrazyBotTest, 3StepWestAndEastEachProbDiff) {
+	double actual = sut->getProbability(3, 75, 25, 0, 0);
+	double expected = 0.4375;
+	EXPECT_EQ(actual, expected);
+}
+
