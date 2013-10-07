@@ -51,9 +51,9 @@ public:
 
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-//				if (maze[i][j] == '.' && board[i][j] == -1) {
-//					return -1;
-//				}
+				if (maze[i][j] == '.' && board[i][j] == -1) {
+					return -1;
+				}
 				max = std::max(max, board[i][j]);
 			}
 		}
