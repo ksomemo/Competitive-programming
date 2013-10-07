@@ -28,6 +28,7 @@ TEST_F(NumberMagicEasyTest, YesNoNoNoReturn8) {
 	int expected = 8;
 
 	EXPECT_EQ(actual, expected);
+	EXPECT_EQ(sut->theNumberFromNums(answer), expected);
 }
 
 TEST_F(NumberMagicEasyTest, ForthNoReturn16) {
@@ -37,6 +38,7 @@ TEST_F(NumberMagicEasyTest, ForthNoReturn16) {
 	int expected = 16;
 
 	EXPECT_EQ(actual, expected);
+	EXPECT_EQ(sut->theNumberFromNums(answer), expected);
 }
 
 TEST_F(NumberMagicEasyTest, ForthYesReturn1) {
@@ -46,6 +48,7 @@ TEST_F(NumberMagicEasyTest, ForthYesReturn1) {
 	int expected = 1;
 
 	EXPECT_EQ(actual, expected);
+	EXPECT_EQ(sut->theNumberFromNums(answer), expected);
 }
 
 TEST_F(NumberMagicEasyTest, NoYesNoYesReturn11) {
@@ -55,5 +58,6 @@ TEST_F(NumberMagicEasyTest, NoYesNoYesReturn11) {
 	int expected = 11;
 
 	EXPECT_EQ(actual, expected);
+	EXPECT_EQ(sut->theNumberFromNums(answer), expected);
 }
 
