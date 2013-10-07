@@ -48,3 +48,12 @@ TEST_F(NumberMagicEasyTest, ForthYesReturn1) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(NumberMagicEasyTest, NoYesNoYesReturn11) {
+	std::string answer = "NYNY";
+
+	int actual = sut->theNumber(answer);
+	int expected = 11;
+
+	EXPECT_EQ(actual, expected);
+}
+
