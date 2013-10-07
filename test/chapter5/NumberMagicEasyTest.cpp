@@ -30,3 +30,21 @@ TEST_F(NumberMagicEasyTest, YesNoNoNoReturn8) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(NumberMagicEasyTest, ForthNoReturn16) {
+	std::string answer = "NNNN";
+
+	int actual = sut->theNumber(answer);
+	int expected = 16;
+
+	EXPECT_EQ(actual, expected);
+}
+
+TEST_F(NumberMagicEasyTest, ForthYesReturn1) {
+	std::string answer = "YYYY";
+
+	int actual = sut->theNumber(answer);
+	int expected = 1;
+
+	EXPECT_EQ(actual, expected);
+}
+
