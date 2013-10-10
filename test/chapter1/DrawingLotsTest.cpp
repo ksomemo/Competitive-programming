@@ -31,3 +31,14 @@ TEST_F(DrawingLotsTest, existsComb) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(DrawingLotsTest, notExistsComb) {
+	int lots[] = {1, 3, 5};
+	int lotsNum = sizeof(lots) / sizeof(lots[0]);
+	int sum = 9;
+
+	bool actual = sut->existsComb(lots, lotsNum, sum);
+	bool expected = false;
+
+	EXPECT_EQ(actual, expected);
+}
+
