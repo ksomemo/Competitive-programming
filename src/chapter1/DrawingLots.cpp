@@ -4,24 +4,20 @@ class DrawingLots {
 public:
 	bool existsComb(int lots[], int lotsNum, int sum) {
 		// binarySearch前提のため、昇順ソートする
-		std::sort(lots, lots + lotsNum);
+		int lotsCrossNum = lotsNum * lotsNum;
+		int lotsCross[lotsCrossNum];
+
+		for (int i = 0; i < lotsNum; i++) {
+			for (int j = 0; j < lotsNum; j++) {
+				lotsCross[lotsNum * i + j] = lots[i] + lots[j] ;
+			}
+		}
+		std::sort(lotsCross, lotsCross + lotsCrossNum);
 
 		for (int a = 0; a < lotsNum; a++) {
 			for (int b = 0; a < lotsNum; a++) {
-				for (int c = 0; a < lotsNum; a++) {
-					// s = a + b + c + d;
-					// s:constant
-					// a~d: variable
-					// d = s - a - b - c;
-					// 変数が減る→ループが減る(かも！
-					// 最後の比較をどうすればよいか
-					// という問題にシフトした
-					// a~c:index
-					// これを使って数を求められる＋定数
-					// 上記の足した結果になるような要素の有無
-					if (this->binarySearch(lots, lotsNum, sum - lots[a] - lots[b] - lots[c])) {
-						return true;
-					}
+				if (this->binarySearch(lotsCross, lotsCrossNum, sum - lots[a] - lots[b])) {
+					return true;
 				}
 			}
 		}
