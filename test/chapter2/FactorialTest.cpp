@@ -26,3 +26,11 @@ TEST_F(FactorialTest, Fact3Returns6) {
 
 	EXPECT_EQ(actual, expected);
 }
+
+TEST_F(FactorialTest, Fact4Returns24) {
+	int actual = sut->fact(4);
+	int expected = 24;
+
+	EXPECT_EQ(actual, expected);
+}
+
