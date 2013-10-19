@@ -28,3 +28,11 @@ TEST_F(FibTest, fib4Return3) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(FibTest, fib10Return55) {
+
+	int actual = sut->fibonacciNumber(10);
+	int expected = 55;
+
+	EXPECT_EQ(actual, expected);
+}
+
