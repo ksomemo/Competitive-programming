@@ -34,7 +34,7 @@ TEST_F(LakeCountingTest, count3) {
 		"..W.......W.",
 	};
 	int col = area[0].length();
-	int row = sizeof(area) / col;
+	int row = 10;
 
 	int actual = sut->lakeNum(area, col, row);
 	int expected = 3;
