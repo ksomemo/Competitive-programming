@@ -31,3 +31,14 @@ TEST_F(PartialSumTest, exists) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(PartialSumTest, notExists) {
+	int nums[] = {1, 2, 4, 7};
+	int numCnt = 4;
+	int target = 15;
+
+	bool actual = sut->exists(nums, numCnt, target);
+	bool expected = false;
+
+	EXPECT_EQ(actual, expected);
+}
+
