@@ -1,34 +1,31 @@
 #include <string>
-#include <iostream>
 
 class BestCowLine {
 public:
 	std::string bestCowLine(std::string str) {
 		std::string bestStr = "";
 		int len = str.length();
-		while (len > 0) {
+		int posL = 0;
+		int posR = len - 1;
+
+		while (posL <= posR) {
 			bool isSmallLeft = true;
-			for (int i = 0; i < len / 2; i++) {
-				if (str[i] < str[len - i - 1]) {
+			for (int i = 0; posL + i <= posR - i; i++) {
+				if (str[posL + i] < str[posR - i]) {
 					break;
-				} else if (str[i] > str[len - i - 1]) {
+				} else if (str[posL + i] > str[posR - i]) {
 					isSmallLeft = false;
 					break;
 				}
 			}
 
-			if (len == 1) {
-				bestStr += str[0];
-				str = "";
-			} else if (isSmallLeft) {
-				bestStr += str[0];
-				str = str.substr(1, len - 1);
+			if (isSmallLeft) {
+				bestStr += str[posL];
+				posL++;
 			} else {
-				bestStr += str[len - 1];
-				str = str.substr(0, len - 1);
+				bestStr += str[posR];
+				posR--;
 			}
-
-			len = str.length();
 		}
 
 		return bestStr;
