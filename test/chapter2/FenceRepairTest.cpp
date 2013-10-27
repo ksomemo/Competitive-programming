@@ -30,3 +30,13 @@ TEST_F(FenceRepairTest, testCaseName) {
 	EXPECT_EQ(actual, expected);
 }
 
+TEST_F(FenceRepairTest, testCaseName2) {
+	int lenghs[] = {3, 4, 5, 1, 2};
+	int lenNum = 5;
+
+	int actual = sut->lowestCostCut(lenghs, lenNum);
+	int expected = 33;
+
+	EXPECT_EQ(actual, expected);
+}
+
