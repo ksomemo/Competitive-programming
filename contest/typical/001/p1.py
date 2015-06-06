@@ -45,7 +45,21 @@ def main():
 		search(x - 1, y)
 		search(x, y + 1)
 		search(x, y - 1)
-	search(start_pos[0], start_pos[1])
+	#search(start_pos[0], start_pos[1])
+
+	stack = [(start_pos[0], start_pos[1])]
+	while len(stack) > 0:
+		x, y = stack.pop()
+		if must_return(x, y):
+			continue
+		reached[y][x] = 1
+		if maze[y][x] == goal:
+			continue
+
+		stack.append((x + 1, y))
+		stack.append((x - 1, y))
+		stack.append((x, y + 1))
+		stack.append((x, y - 1))
 
 	if reached[goal_pos[1]][goal_pos[0]] == 1:
 		print('Yes')
