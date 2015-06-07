@@ -19,12 +19,12 @@ for m, s in [input_int_l() for _ in range(N)]:
 
 def f(price):
 	type_num = 0
-	for i in range(1, price):
+	max_p = N if price > N else price
+	for i in range(1, max_p+1):
 		m_price = i
 		s_price = price - i
-		if m_price > N or s_price > N:
-			continue
-		type_num += mains[m_price-1] * subs[s_price-1]
+		if 1 <= m_price <= max_p and 1 <= s_price <= max_p:
+			type_num += mains[m_price-1] * subs[s_price-1]
 	return type_num
 
 for k in range(1, 2 * N + 1):
