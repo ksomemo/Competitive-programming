@@ -1,7 +1,7 @@
 import functools
 
 
-def solve(move_num, move_min, move_max, patterns):
+def solve(move_min, move_max, patterns):
     west_d = [distance for direction, distance in patterns if direction == "West"]
     east_d = [distance for direction, distance in patterns if direction == "East"]
 
