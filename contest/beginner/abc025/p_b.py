@@ -22,3 +22,26 @@ def move_d(distance, move_min, move_max):
     elif distance < move_min:
         return move_min
     return distance
+
+# templates
+def input_str():
+        return input().strip('\n')
+
+def input_int():
+        return int(input_str())
+
+def input_str_l(sep=None):
+        return input_str().split(sep)
+
+def input_int_l(sep=None):
+        return map(int, input_str_l(sep))
+
+if __name__ == "__main__":
+    move_num, move_min, move_max = input_int_l()
+    patterns = []
+    for _ in range(move_num):
+        direction, distance = input_str_l()
+        patterns.append((direction, int(distance)))
+
+    result = solve(move_min, move_max, patterns)
+    print(result)
