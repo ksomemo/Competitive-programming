@@ -13,6 +13,8 @@ def solve(move_min, move_max, patterns):
         return "0"
     elif pos < initial_position:
         return "West {0}".format(abs(pos))
+    else:
+        return "East {0}".format(pos)
 
 def move_d(distance, move_min, move_max):
     if distance > move_max:
