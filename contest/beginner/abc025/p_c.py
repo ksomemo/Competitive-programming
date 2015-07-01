@@ -24,7 +24,11 @@ def score(used, b, c):
                 ans += c[i][j]
     return ans
 
+memo = {}
 def dfs(turn, b, c):
+    key = tuple(map(tuple, used))
+    if key in memo: return memo[key]
+
     if turn > last_turn:
         return score(used, b, c)
 
@@ -49,6 +53,7 @@ def dfs(turn, b, c):
             # 元に戻して、別のパターンで試す
             used[i][j] = 0
 
+    memo[key] = ans
     return ans
 
 # templates
