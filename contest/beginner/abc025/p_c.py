@@ -1,60 +1,64 @@
-N = 3
-used = [[0 for _ in range(N)] for _ in range(N)]
-last_turn = N * N
+class ProblemC():
+    def __init__(self, b, c):
+        self.b = b
+        self.c = c
+        self.N = len(c)
+        self.memo = {}
 
-def solve(b, c):
-    # もし全ての点を１人でとれるとした時の総得点
-    total = sum(map(sum, b)) + sum(map(sum, c))
+    def solve(self):
+        # もし全ての点を１人でとれるとした時の総得点
+        total = sum(map(sum, self.b)) + sum(map(sum, self.c))
 
-    # 実際の先攻の得点と総得点の差分が後攻の得点になる
-    # つまり、後攻は先攻の得点が小さいほうが良い
-    ans = dfs(1, b, c)
-    return (ans, total - ans)
+        # 実際の先攻の得点と総得点の差分が後攻の得点になる
+        # つまり、後攻は先攻の得点が小さいほうが良い
+        used = [[0 for _ in range(self.N)] for _ in range(self.N)]
+        score = self.dfs(1, used)
+        return (score, total - score)
 
-def score(used, b, c):
-    ans = 0
-    for i in range(N-1):
-        for j in range(N):
-            if used[i][j] == used[i + 1][j]:
-                ans += b[i][j]
+    def score(self, used):
+        score = 0
+        for i in range(self.N-1):
+            for j in range(self.N):
+                if used[i][j] == used[i + 1][j]:
+                    score += self.b[i][j]
 
-    for i in range(N):
-        for j in range(N-1):
-            if used[i][j] == used[i][j + 1]:
-                ans += c[i][j]
-    return ans
+        for i in range(self.N):
+            for j in range(self.N-1):
+                if used[i][j] == used[i][j + 1]:
+                    score += self.c[i][j]
+        return score
 
-memo = {}
-def dfs(turn, b, c):
-    key = tuple(map(tuple, used))
-    if key in memo: return memo[key]
+    def dfs(self, turn, used):
+        key = tuple(map(tuple, used))
+        if key in self.memo: return self.memo[key]
 
-    if turn > last_turn:
-        return score(used, b, c)
+        last_turn = self.N * self.N
+        if turn > last_turn:
+            return self.score(used)
 
-    is_first_player = turn % 2 == 1
-    if is_first_player:
-        ans = 0
-        use = 1
-        comp_f = max
-    else:
-        ans = 9999999
-        use = 2
-        comp_f = min
+        is_first_player = turn % 2 == 1
+        if is_first_player:
+            score = 0
+            use = 1
+            comp_f = max
+        else:
+            score = 9999999
+            use = 2
+            comp_f = min
 
-    for i in range(N):
-        for j in range(N):
-            if used[i][j] != 0: continue
-            # 次のターンに移行する
-            # 再帰になるので、埋まるまで続く
-            used[i][j] = use
-            temp = dfs(turn + 1, b, c)
-            ans = comp_f(temp, ans)
-            # 元に戻して、別のパターンで試す
-            used[i][j] = 0
+        for i in range(self.N):
+            for j in range(self.N):
+                if used[i][j] != 0: continue
+                # 次のターンに移行する
+                # 再帰になるので、埋まるまで続く
+                used[i][j] = use
+                temp = self.dfs(turn + 1, used)
+                score = comp_f(temp, score)
+                # 元に戻して、別のパターンで試す
+                used[i][j] = 0
 
-    memo[key] = ans
-    return ans
+        self.memo[key] = score
+        return score
 
 # templates
 def input_str():
@@ -73,6 +77,6 @@ if __name__ == "__main__":
     b = [input_int_l() for _ in range(2)] + [[0, 0, 0]]
     c = [input_int_l() + [0] for _ in range(3)]
 
-    result = solve(b, c)
+    result = ProblemC(b, c).solve()
     print(result[0])
     print(result[1])
