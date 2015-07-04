@@ -64,3 +64,13 @@ def solve(board):
             cnt += 1
 
     return cnt % 1000000007
+
+# templates
+def input_int_l_all(sep=None):
+    import sys
+    return [list(map(int, l.strip('\n').split(sep))) for l in sys.stdin]
+
+if __name__ == "__main__":
+    b = input_int_l_all()
+    result = solve(b)
+    print(result)
