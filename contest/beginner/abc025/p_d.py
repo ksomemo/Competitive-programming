@@ -16,7 +16,7 @@ def fill_board(board, p, pos_zeros):
     b = copy.deepcopy(board)
     for v, pos in zip(p, pos_zeros):
         i, j = pos
-        board[i][j] = v
+        b[i][j] = v
 
     return b
 
