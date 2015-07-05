@@ -25,6 +25,9 @@ def test_ex2():
     actual = p_d.solve(board)
     assert expected == actual
 
+    actual = p_d.solve_bit_dp(board)
+    assert expected == actual
+
 def test_ex3():
     board = [
         [1, 2, 3, 4, 5],

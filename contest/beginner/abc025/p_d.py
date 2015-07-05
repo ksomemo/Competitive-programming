@@ -65,6 +65,52 @@ def solve(board):
 
     return cnt % 1000000007
 
+def solve_bit_dp(board):
+    max_mask = 1 << 25
+    pos_zeros = []
+    fix = [-1] * (25 + 1)
+    dp = [0] * (max_mask)
+    mo = 1000000007
+
+    flatten = reduce(operator.add, board)
+    for i, v in enumerate(flatten):
+        if v == 0:
+            pos_zeros.append(i)
+        else:
+            fix[v] = i
+
+    dp[0] = 1
+    for mask in range(max_mask - 1):
+        if not dp[mask]:
+            continue
+        b = bin(mask).count("1") + 1
+        if fix[b] >= 0:
+            r = fix[b]
+            y = r // 5
+            x = r % 5
+            if mask & (1 << r) == 0:
+                if 0 < y < 4 and ((mask >> (r - 5)) ^ (mask >> (r + 5))) & 1:
+                    continue
+                if 0 < x < 4 and ((mask >> (r - 1)) ^ (mask >> (r + 1))) & 1:
+                    continue
+                dp[mask ^ (1 << r)] += dp[mask]
+                if dp[mask ^ (1 << r)] >= mo:
+                    dp[mask ^ (1 << r)] -= mo
+        else:
+            for r in pos_zeros:
+                y = r // 5
+                x = r % 5
+                if (mask & (1 << r)) == 0:
+                    if 0 < y < 4 and ((mask >> (r - 5)) ^ (mask >> (r + 5))) & 1:
+                        continue
+                    if 0 < x < 4 and ((mask >> (r - 1)) ^ (mask >> (r + 1))) & 1:
+                        continue
+                    dp[mask ^ (1 << r)] += dp[mask]
+                    if dp[mask ^ (1 << r)] >= mo:
+                        dp[mask ^ (1 << r)] -= mo
+
+    return dp[(1 << 25) - 1]
+
 # templates
 def input_int_l_all(sep=None):
     import sys
@@ -72,5 +118,5 @@ def input_int_l_all(sep=None):
 
 if __name__ == "__main__":
     b = input_int_l_all()
-    result = solve(b)
+    result = solve_bit_dp(b)
     print(result)
