@@ -6,25 +6,16 @@ def solve(N, M, board):
 
     # x,y=>1,0, 1,1に依存する
     # x,y=>0,1, 1,1に依存する
-    before = [[-1 for _ in range(M)] for _ in range(N)]
+    before = [[0 for _ in range(M)] for _ in range(N)]
     for i in range(N):
         for j in range(M):
-            # 四隅
-            if i == 0 and j == 0: continue
-            if i+1 >= N or j+1>=M: continue
-
             v = board[i][j]
-            before[i+1][j] = v
-            board[i][j] -= v
-            board[i-1][j] -= v
-            board[i+1][j-1] -= v
-            board[i+1][j+1] -= v
-
-
-    for i in range(N):
-        for j in range(M):
-            if before[i][j] == -1:
-                before[i][j] = 0
+            if v > 0:
+                before[i+1][j] = v
+                board[i][j] -= v
+                board[i-1][j] -= v
+                board[i+1][j-1] -= v
+                board[i+1][j+1] -= v
 
     return before
 
