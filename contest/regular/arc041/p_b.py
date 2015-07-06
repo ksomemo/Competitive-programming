@@ -1,11 +1,4 @@
 def solve(N, M, board):
-    # 四隅は必ず0
-    # 000    0x0
-    # 0x0 => x0x
-    # 000    0x0
-
-    # x,y=>1,0, 1,1に依存する
-    # x,y=>0,1, 1,1に依存する
     before = [[0 for _ in range(M)] for _ in range(N)]
     for i in range(N):
         for j in range(M):
@@ -35,7 +28,11 @@ def input_int_l(sep=None):
 def input_int_l_nosep():
     return list(map(int, list(input_str())))
 
+def print_nested(nested, sep=''):
+    for l in nested:
+        print(sep.join(map(str, l)))
+
 if __name__ == '__main__':
     N, M = input_int_l()
     board = [input_int_l_nosep() for _ in range(N)]
-    print(solve(N, M, board))
+    print_nested(solve(N, M, board))
