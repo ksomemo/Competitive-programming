@@ -1,18 +1,11 @@
 import p_a
+import pytest
 
 
-def test_ex1():
-    expected = 4
-    front = 3
-    back = 2
-    turn = 1
-    actual = p_a.solve(front, back, turn)
-    assert expected == actual
-
-def test_ex2():
-    expected = 3
-    front = 3
-    back = 2
-    turn = 4
+@pytest.mark.parametrize('front, back, turn, expected', [
+    (3, 2, 1, 4),
+    (3, 2, 4, 3),
+])
+def test_examples(front, back, turn, expected):
     actual = p_a.solve(front, back, turn)
     assert expected == actual
