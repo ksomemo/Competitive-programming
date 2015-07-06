@@ -13,7 +13,7 @@ def solve(N, M, board):
             if v > 0:
                 before[i+1][j] = v
                 board[i][j] -= v
-                board[i-1][j] -= v
+                board[i+2][j] -= v
                 board[i+1][j-1] -= v
                 board[i+1][j+1] -= v
 
