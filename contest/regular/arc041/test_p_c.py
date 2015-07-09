@@ -10,7 +10,17 @@ def test_ex1():
     actual = p_c.solve(rabbits, 5)
     assert expected == actual
 
-def test_ex_my1():
+def test_ex_my1_0():
+    """右一方向のみ, 間隔あり"""
+    expected = 5
+    rabbits = [
+        [1, 'R'],
+        [3, 'R'],
+    ]
+    actual = p_c.solve(rabbits, 5)
+    assert expected == actual
+
+def test_ex_my1_1():
     """左一方向のみ"""
     expected = 4
     rabbits = [
