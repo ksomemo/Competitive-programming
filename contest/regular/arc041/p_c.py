@@ -54,7 +54,7 @@ def solve(rabbits, L):
     print("pos:", pos_list)
     print("pos inv:", inv_pos_list)
     print("jump cnt:", jump_count)
-    diff = inv_pos_list[0] - pos_list[-1]
+    diff = inv_pos_list[0] - pos_list[-1] - 1
     print("diff:", diff)
     # 右向きの最大と、左向きの最小の位置の差を見る
     #　それぞれの方向別にjumpできる奥の位置がわかる
@@ -62,17 +62,17 @@ def solve(rabbits, L):
     if len(pos_list) == len(inv_pos_list):
         for p in pos_list:
             if p == 0: continue
-            jump_count += diff - 1
-            print("jump cnt:", jump_count)
+            jump_count += diff
+            print("jump cnt eq:", jump_count)
     elif len(pos_list) > len(inv_pos_list):
         for p in pos_list:
             if p == 0: continue
-            jump_count += diff - p
+            jump_count += diff
             print("jump cnt:", jump_count)
     else:
         for p in inv_pos_list:
-            jump_count += p - diff - 1
-            print("jump cnt:", jump_count)
+            jump_count += diff
+            print("jump cnt inv:", jump_count)
 
     return jump_count
 
@@ -102,4 +102,5 @@ if __name__ == '__main__':
     for _ in range(N):
         pos, direction = input_str_l()
         rabbits.append((int(pos), direction))
-    print(solve(rabbits, L))
+    result = solve(rabbits, L)
+    print(result)

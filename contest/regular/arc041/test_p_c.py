@@ -2,6 +2,7 @@ import p_c
 
 
 def test_ex1():
+    """右一方向のみ"""
     expected = 4
     rabbits = [
         [1, 'R'],
@@ -9,7 +10,18 @@ def test_ex1():
     actual = p_c.solve(rabbits, 5)
     assert expected == actual
 
+def test_ex_my1():
+    """左一方向のみ"""
+    expected = 4
+    rabbits = [
+        [3, 'L'],
+        [4, 'L'],
+    ]
+    actual = p_c.solve(rabbits, 5)
+    assert expected == actual
+
 def test_ex2():
+    """左右あり左方向で終わり"""
     expected = 3
     rabbits = [
         [1, 'R'],
@@ -21,6 +33,7 @@ def test_ex2():
     assert expected == actual
 
 def test_ex3():
+    """左右あり右方向で終わり"""
     expected = 0
     rabbits = [
         [1, 'L'],
