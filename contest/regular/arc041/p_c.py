@@ -7,11 +7,13 @@ def solve(rabbits, L):
 
     for n_pos, n_d in rabbits:
         print("before direction:", bef_d)
+        print("now direction:", n_d)
+        print("now pos:", n_pos)
         print("pos:", pos_list)
         print("pos inv:", inv_pos_list)
         print("jump cnt:", jump_count)
 
-        if bef_d != n_pos:
+        if bef_d != n_d:
             if len(pos_list) > 0 and len(inv_pos_list) > 0:
                 # 位置を両方向とも溜め込んでいたら
                 # その時点でのJUMP回数を計算する
@@ -69,7 +71,7 @@ def solve(rabbits, L):
             print("jump cnt:", jump_count)
     else:
         for p in inv_pos_list:
-            jump_count += p - diff
+            jump_count += p - diff - 1
             print("jump cnt:", jump_count)
 
     return jump_count
