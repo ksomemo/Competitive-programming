@@ -26,16 +26,17 @@ def solve(rabbits, L):
                     for p in pos_list:
                         if p == 0: continue
                         jump_count += diff - 1
-                        print("jump cnt:", jump_count)
+                        print("jump cnt eq:", jump_count)
                 elif len(pos_list) > len(inv_pos_list):
                     for p in pos_list:
                         if p == 0: continue
                         jump_count += diff - p
                         print("jump cnt:", jump_count)
                 else:
-                    for p in inv_pos_list:
-                        jump_count += p - diff
-                        print("jump cnt:", jump_count)
+                    for i, p in enumerate(inv_pos_list):
+                        diff = p - pos_list[-1] - 1 - i
+                        jump_count += diff
+                        print("jump cnt inv:", jump_count)
 
                 pos_list = []
                 inv_pos_list = []
