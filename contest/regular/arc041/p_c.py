@@ -70,7 +70,9 @@ def solve(rabbits, L):
             jump_count += diff
             print("jump cnt:", jump_count)
     else:
-        for p in inv_pos_list:
+        for i, p in enumerate(inv_pos_list):
+            # 間隔を求める(前のうさぎによって一番奥より１つ後ろにいくことになる)
+            diff = p - pos_list[-1] - 1 - i
             jump_count += diff
             print("jump cnt inv:", jump_count)
 
