@@ -1,6 +1,14 @@
 import p_c
 
 
+def test_ex1():
+    expected = 4
+    rabbits = [
+        [1, 'R'],
+    ]
+    actual = p_c.solve(rabbits, 5)
+    assert expected == actual
+
 def test_ex2():
     expected = 3
     rabbits = [
