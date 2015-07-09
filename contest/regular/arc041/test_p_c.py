@@ -87,3 +87,20 @@ def test_ex3_my2():
     ]
     actual = p_c.solve(rabbits, 7)
     assert expected == actual
+
+def test_ex3_my2():
+    """左右あり右方向で終わり,
+    途中ぶつかるが少ないグループの間隔があるので先頭は動かなくても後ろは詰める"""
+    expected = 11
+    rabbits = [
+        [1, 'R'],
+        [2, 'R'],
+        [4, 'R'],
+        [6, 'R'], # 少ない方へ動く
+        [8, 'L'], # 先頭は雨後ナイア
+        [10, 'L'], # 先頭との間隔あるので詰める
+        [11, 'L'],
+        [12, 'R'],
+    ]
+    actual = p_c.solve(rabbits, 12)
+    assert expected == actual

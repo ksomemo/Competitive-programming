@@ -13,10 +13,16 @@ def count_jump(pos_list, inv_pos_list, L):
             for i, p in enumerate(pos_list):
                 jump_count += inv_pos_list[0] - p - i - 1
                 print("jump cnt:", jump_count)
+            for i, p in enumerate(inv_pos_list):
+                jump_count += p - inv_pos_list[0] - i
+                print("jump cnt:", jump_count)
         else:
             for i, p in enumerate(inv_pos_list):
                 jump_count += p - pos_list[-1] - i - 1
                 print("jump cnt inv:", jump_count)
+            for i, p in enumerate(pos_list[::-1]):
+                jump_count += pos_list[0] - p - i
+                print("jump cnt:", jump_count)
     return jump_count
 
 def solve(rabbits, L):
