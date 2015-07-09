@@ -28,9 +28,10 @@ def solve(rabbits, L):
                         jump_count += diff - 1
                         print("jump cnt eq:", jump_count)
                 elif len(pos_list) > len(inv_pos_list):
-                    for p in pos_list:
+                    for i, p in enumerate(pos_list):
+                        diff = inv_pos_list[0] - p - i - 1
                         if p == 0: continue
-                        jump_count += diff - p
+                        jump_count += diff
                         print("jump cnt:", jump_count)
                 else:
                     for i, p in enumerate(inv_pos_list):

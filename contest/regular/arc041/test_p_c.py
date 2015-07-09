@@ -74,3 +74,16 @@ def test_ex3_my1():
     ]
     actual = p_c.solve(rabbits, 5)
     assert expected == actual
+
+def test_ex3_my2():
+    """左右あり右方向で終わり, 途中間隔あり(右方向へ進む)"""
+    expected = 3
+    rabbits = [
+        [1, 'L'],
+        [2, 'R'],
+        [4, 'R'],
+        [6, 'L'],
+        [7, 'R'],
+    ]
+    actual = p_c.solve(rabbits, 7)
+    assert expected == actual
