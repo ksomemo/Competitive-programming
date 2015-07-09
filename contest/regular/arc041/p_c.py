@@ -1,8 +1,29 @@
+def count_jump(pos_list, inv_pos_list, L):
+    jump_count = 0
+    if len(pos_list) == 0:
+        for i, p in enumerate(inv_pos_list):
+            jump_count += p - i - 1
+            print("jump cnt zero:", jump_count)
+    elif len(inv_pos_list) == 0:
+        for i, p in enumerate(pos_list):
+            jump_count += L - p - i
+            print("jump cnt zero:", jump_count)
+    else:
+        if len(pos_list) > len(inv_pos_list):
+            for i, p in enumerate(pos_list):
+                jump_count += inv_pos_list[0] - p - i - 1
+                print("jump cnt:", jump_count)
+        else:
+            for i, p in enumerate(inv_pos_list):
+                jump_count += p - pos_list[-1] - i - 1
+                print("jump cnt inv:", jump_count)
+    return jump_count
+
 def solve(rabbits, L):
     # 最初は右向き
     jump_count = 0
     bef_d = 'R'
-    pos_list = [0]
+    pos_list = []
     inv_pos_list = []
 
     for n_pos, n_d in rabbits:
@@ -13,34 +34,13 @@ def solve(rabbits, L):
         print("pos inv:", inv_pos_list)
         print("jump cnt:", jump_count)
 
-        if bef_d != n_d:
-            if len(pos_list) > 0 and len(inv_pos_list) > 0:
-                # 位置を両方向とも溜め込んでいたら
-                # その時点でのJUMP回数を計算する
-                diff = inv_pos_list[0] - pos_list[-1]
-                print("diff:", diff)
-                # 右向きの最大と、左向きの最小の位置の差を見る
-                #　それぞれの方向別にjumpできる奥の位置がわかる
-                # 奥の位置とうさぎの位置との差分
-                if len(pos_list) == len(inv_pos_list):
-                    for p in pos_list:
-                        if p == 0: continue
-                        jump_count += diff - 1
-                        print("jump cnt eq:", jump_count)
-                elif len(pos_list) > len(inv_pos_list):
-                    for i, p in enumerate(pos_list):
-                        diff = inv_pos_list[0] - p - i - 1
-                        if p == 0: continue
-                        jump_count += diff
-                        print("jump cnt:", jump_count)
-                else:
-                    for i, p in enumerate(inv_pos_list):
-                        diff = p - pos_list[-1] - 1 - i
-                        jump_count += diff
-                        print("jump cnt inv:", jump_count)
+        # 背中合わせになったら、前の区間のJUMP回数を求める
+        if bef_d == 'L' and n_d == 'R':
+            jump_count += count_jump(pos_list, inv_pos_list, L)
 
-                pos_list = []
-                inv_pos_list = []
+            pos_list = []
+            inv_pos_list = []
+
         # うさぎを集める
         if n_d == 'R':
             pos_list.append(n_pos)
@@ -50,34 +50,14 @@ def solve(rabbits, L):
         bef_d = n_d
         print("")
 
-    if len(inv_pos_list) == 0:
-        inv_pos_list.append(L+1)
     print("before direction:", bef_d)
     print("pos:", pos_list)
     print("pos inv:", inv_pos_list)
     print("jump cnt:", jump_count)
-    diff = inv_pos_list[0] - pos_list[-1] - 1
-    print("diff:", diff)
     # 右向きの最大と、左向きの最小の位置の差を見る
     #　それぞれの方向別にjumpできる奥の位置がわかる
     # 奥の位置とうさぎの位置との差分
-    if len(pos_list) == len(inv_pos_list):
-        for p in pos_list:
-            if p == 0: continue
-            jump_count += diff
-            print("jump cnt eq:", jump_count)
-    elif len(pos_list) > len(inv_pos_list):
-        for i, p in enumerate(pos_list):
-            diff = inv_pos_list[0] - p - i
-            if p == 0: continue
-            jump_count += diff
-            print("jump cnt:", jump_count)
-    else:
-        for i, p in enumerate(inv_pos_list):
-            # 間隔を求める(前のうさぎによって一番奥より１つ後ろにいくことになる)
-            diff = p - pos_list[-1] - 1 - i
-            jump_count += diff
-            print("jump cnt inv:", jump_count)
+    jump_count += count_jump(pos_list, inv_pos_list, L)
 
     return jump_count
 
