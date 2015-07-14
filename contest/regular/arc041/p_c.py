@@ -1,69 +1,49 @@
-def count_jump(pos_list, inv_pos_list, L):
+def count_jump(right_list, left_list, L):
     jump_count = 0
-    if len(pos_list) == 0:
-        for i, p in enumerate(inv_pos_list):
+    if len(right_list) == 0:
+        for i, p in enumerate(left_list):
             jump_count += p - i - 1
-            print("jump cnt zero:", jump_count)
-    elif len(inv_pos_list) == 0:
-        for i, p in enumerate(pos_list):
+    elif len(left_list) == 0:
+        for i, p in enumerate(right_list):
             jump_count += L - p - i
-            print("jump cnt zero:", jump_count)
     else:
-        if len(pos_list) > len(inv_pos_list):
-            for i, p in enumerate(pos_list):
-                jump_count += inv_pos_list[0] - p - i - 1
-                print("jump cnt:", jump_count)
-            for i, p in enumerate(inv_pos_list):
-                jump_count += p - inv_pos_list[0] - i
-                print("jump cnt:", jump_count)
-        else:
-            for i, p in enumerate(inv_pos_list):
-                jump_count += p - pos_list[-1] - i - 1
-                print("jump cnt inv:", jump_count)
-            for i, p in enumerate(pos_list[::-1]):
-                jump_count += pos_list[0] - p - i
-                print("jump cnt:", jump_count)
+        # 各向きのグループの間隔を詰める
+        for i, p in enumerate(right_list):
+            jump_count += right_list[-1] -p - i
+        for i, p in enumerate(left_list):
+            jump_count += p - left_list[0] - i
+
+        # グループ先頭同士の間を片方のグループを進めて詰める
+        head_diff = left_list[0] - right_list[-1] - 1
+        max_cnt = max(len(right_list), len(left_list))
+        jump_count += head_diff * max_cnt
+
     return jump_count
 
 def solve(rabbits, L):
     # 最初は右向き
     jump_count = 0
     bef_d = 'R'
-    pos_list = []
-    inv_pos_list = []
+    right_list = []
+    left_list = []
 
     for n_pos, n_d in rabbits:
-        print("before direction:", bef_d)
-        print("now direction:", n_d)
-        print("now pos:", n_pos)
-        print("pos:", pos_list)
-        print("pos inv:", inv_pos_list)
-        print("jump cnt:", jump_count)
-
-        # 背中合わせになったら、前の区間のJUMP回数を求める
+        # 背中合わせになったら、向き合っているグループのJUMP回数を求める
         if bef_d == 'L' and n_d == 'R':
-            jump_count += count_jump(pos_list, inv_pos_list, L)
+            jump_count += count_jump(right_list, left_list, L)
 
-            pos_list = []
-            inv_pos_list = []
+            right_list = []
+            left_list = []
 
         # うさぎを集める
         if n_d == 'R':
-            pos_list.append(n_pos)
+            right_list.append(n_pos)
         else:
-            inv_pos_list.append(n_pos)
+            left_list.append(n_pos)
         # 前回の方向を保持
         bef_d = n_d
-        print("")
 
-    print("before direction:", bef_d)
-    print("pos:", pos_list)
-    print("pos inv:", inv_pos_list)
-    print("jump cnt:", jump_count)
-    # 右向きの最大と、左向きの最小の位置の差を見る
-    #　それぞれの方向別にjumpできる奥の位置がわかる
-    # 奥の位置とうさぎの位置との差分
-    jump_count += count_jump(pos_list, inv_pos_list, L)
+    jump_count += count_jump(right_list, left_list, L)
 
     return jump_count
 
