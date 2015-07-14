@@ -12,3 +12,9 @@ def input_str_l(sep=None):
 def input_int_l(sep=None):
     return list(map(int, input_str_l(sep)))
 
+def input_str_l_all(sep=None):
+    return [l.strip('\n').split(sep) for l in sys.stdin]
+
+def input_int_l_all(sep=None):
+    return [list(map(int, l.strip('\n').split(sep))) for l in sys.stdin]
+
