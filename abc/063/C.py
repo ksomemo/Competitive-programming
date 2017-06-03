@@ -1,0 +1,21 @@
+def main():
+    N = int(input().strip())
+    ss = [
+        int(input().strip())
+        for _ in range(N)
+    ]
+    total = sum(ss)
+    if total % 10 == 0:
+        for s in sorted(ss):
+            if s % 10 == 0:
+                continue
+            total -= s
+            if total % 10 != 0:
+                break
+    if total % 10 == 0:
+        print(0)
+    else:
+        print(total)
+
+if __name__ == '__main__':
+    main()
