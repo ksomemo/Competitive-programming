@@ -15,7 +15,7 @@ def main():
     for r in rates:
         if r <= 399:
             n_399 = 1
-        elif r <= 399:
+        elif r <= 799:
             n_799 = 1
         elif r <= 1199:
             n_1199 = 1
