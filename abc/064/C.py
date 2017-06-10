@@ -1,6 +1,5 @@
 def main():
-    # not use N
-    _ = int(input().strip())
+    N = int(input().strip())
 
     n_399 = 0
     n_799 = 0
@@ -32,11 +31,16 @@ def main():
         else:
             n_free += 1
 
-    n_min = n_399 + n_799 + n_1199 + n_1599 + n_1999 + n_2399 + n_2799 + n_3199
-    if n_min == 0 and n_free > 0:
+    n_less_3200 = n_399 + n_799 + n_1199 + \
+        n_1599 + n_1999 + n_2399 + n_2799 + n_3199
+
+    n_min = n_less_3200
+    if n_less_3200 == 0 and n_free > 0:
         n_min = 1
 
-    n_max = n_min + n_free
+    n_max = n_less_3200 + n_free
+    if n_less_3200 + n_free >= N:
+        n_max = N
 
     print(n_min, n_max)
 
