@@ -33,10 +33,10 @@ def main():
             n_free += 1
 
     n_min = n_399 + n_799 + n_1199 + n_1599 + n_1999 + n_2399 + n_2799 + n_3199
-    if n_min + n_free >= 8:
-        n_max = 8
-    else:
-        n_max = n_min + n_free
+    if n_min == 0 and n_free > 0:
+        n_min = 1
+
+    n_max = n_min + n_free
 
     print(n_min, n_max)
 
