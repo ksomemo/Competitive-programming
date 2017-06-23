@@ -1,0 +1,10 @@
+def main():
+    H, W = list(map(int, input().strip().split()))
+    print("#" * (W + 2))
+    for _ in range(H):
+        a = input().strip()
+        print("#" + a + "#")
+    print("#" * (W + 2))
+
+if __name__ == '__main__':
+    main()
