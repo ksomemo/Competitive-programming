@@ -1,0 +1,12 @@
+def main():
+    X, A, B = list(map(int, input().strip().split()))
+    answer = ""
+    if -A + B <= 0:
+        print("delicious")
+    elif -A + B <= X:
+        print("safe")
+    else:
+        print("dangerous")
+
+if __name__ == '__main__':
+    main()
