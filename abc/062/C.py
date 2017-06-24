@@ -20,11 +20,10 @@ def main():
 
 
 def calc_answer(H, W, answer=None):
-    # 縦MAX, H>=2より、W-1まで確認
     if answer is None:
         answer = float("inf")
 
-    for _w in range(1, W):
+    for _w in range(1, math.ceil(W / 2) + 1):
         # 縦MAXで試す
         S = [
             H * _w,
@@ -37,7 +36,7 @@ def calc_answer(H, W, answer=None):
             answer = min(answer, S_diff)
 
         # 横MAXで縦分割
-        for _h in range(1, H):
+        for _h in range(1, math.ceil(H / 2) + 1):
             S = [
                 H * _w,
                 (W - _w) * _h,
