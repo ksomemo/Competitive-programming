@@ -36,16 +36,15 @@ def calc_answer(H, W, answer=None):
             answer = min(answer, S_diff)
 
         # 横MAXで縦分割
-        for _h in range(1, math.ceil(H / 2) + 1):
-            S = [
-                H * _w,
-                (W - _w) * _h,
-                (W - _w) * (H - _h),
-            ]
-            if not 0 in S:
-                S_diff = max(S) - min(S)
-                #print(_h, _w, S, S_diff, answer, sep="\t")
-                answer = min(answer, S_diff)
+        S = [
+            H * _w,
+            (W - _w) * math.ceil(H / 2),
+            (W - _w) * int(H // 2),
+        ]
+        if not 0 in S:
+            S_diff = max(S) - min(S)
+            #print(_h, _w, S, S_diff, answer, sep="\t")
+            answer = min(answer, S_diff)
 
     return answer
 
