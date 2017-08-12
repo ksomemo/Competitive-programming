@@ -8,16 +8,11 @@ def calc(A, B, C, D):
     # aがb包含
     # a start をbが包含
     # a end をbが包含
-    if C <= A <= B <= D:
-        return B - A
-    elif A <= C <= D <= B:
-        return D - C
-    elif C <= A <= D:
-        return D - A
-    elif C <= B <= D:
-        return B - C
-    else:
+    res = min(B, D) - max(A, C)
+    if res < 0:
         return 0
+    else:
+        return res
 
 if __name__ == '__main__':
     main()
