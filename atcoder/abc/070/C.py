@@ -2,7 +2,8 @@ def main():
     N = int(input().strip())
     res = int(input().strip())
     if N == 1:
-        return res
+        print(res)
+        return
     for _ in range(1, N):
         t = int(input().strip())
         res = lcm(res, t)
