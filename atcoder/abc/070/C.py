@@ -5,13 +5,12 @@ def main():
         return res
     for _ in range(1, N):
         t = int(input().strip())
-        res = f(res, t)
+        res = lcm(res, t)
     print(res)
 
 
-def f(a, b):
-    _gcd = gcd(a, b)
-    return int(a / _gcd * b)
+def lcm(a, b):
+    return (a * b) // gcd(a, b)
 
 
 def gcd(a, b):
