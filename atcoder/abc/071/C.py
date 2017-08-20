@@ -1,0 +1,26 @@
+from collections import Counter
+
+
+def main():
+    N = int(input())
+    counter = Counter(map(int, input().split()))
+
+    a = 0
+    b = 0
+
+    def sort_func(t):
+        return t[0]
+    for length, n in sorted(counter.items(),
+                            key=sort_func,
+                            reverse=True):
+        if n < 2:
+            continue
+        if a == 0:
+            a = length
+        else:
+            b = length
+            break
+    print(a * b)
+
+if __name__ == '__main__':
+    main()
