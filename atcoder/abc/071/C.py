@@ -17,6 +17,9 @@ def main():
             continue
         if a == 0:
             a = length
+            if n >= 4:
+                b = length
+                break
         else:
             b = length
             break
