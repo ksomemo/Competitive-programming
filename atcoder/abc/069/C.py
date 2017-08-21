@@ -34,9 +34,7 @@ def main(N, aa):
         n_m4 += int(is_m4)
         n_m2_notm4 += int(is_m2 and not is_m4)
 
-    if n_m2 == N:
-        return "Yes"
-    elif n_m2_notm4 == 0 and n_m4 >= N // 2:
+    if n_m2_notm4 == 0 and n_m4 >= N // 2:
         return "Yes"
     else:
         rest = N - n_m2_notm4 + 1
