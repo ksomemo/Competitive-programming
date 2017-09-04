@@ -13,10 +13,7 @@ def main():
 
 
 def is_happy_day(month, day):
-    if month == (day // 10 + day % 10):
-        return True
-    else:
-        return False
+    return month == (day // 10 + day % 10)
 
 if __name__ == '__main__':
     main()
