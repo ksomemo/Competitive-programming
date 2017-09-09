@@ -28,11 +28,37 @@ def main():
     """
     N, M, R = map(int, input().split())
     r = map(int, input().split())
-    costs = {}
+
+    # initialize
+    inf = float("inf")
+    d = [[inf] * (N + 1) for _ in range(N + 1)]
+    for n in range(1, N + 1):
+        # 同じ町への移動距離はない
+        d[n][n] = 0
     for _ in range(M):
         a, b, c = map(int, input().split())
-        costs[(a, b)] = c
-    min_cost = float('inf')
+        d[a][b] = c
+        d[b][a] = c
+
+    # Warshall-Floyd Algorithm
+    # 経由地点
+    for k in range(1, N + 1):
+        # from
+        for i in range(1, N + 1):
+            # to
+            for j in range(1, N + 1):
+                # compare from-to / from-経由地点-to
+                if d[i][j] > d[i][k] + d[k][j]:
+                    d[i][j] = d[i][k] + d[k][j]
+
+    # 行き方は総当り(順列)
+    min_cost = inf
+    for p in permutations(r):
+        cost = 0
+        for i in range(len(p) - 1):
+            src, dst = p[i:i + 2]
+            cost += d[src][dst]
+        min_cost = min(min_cost, cost)
 
     print(min_cost)
 
