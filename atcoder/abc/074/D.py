@@ -8,29 +8,29 @@ def main():
     """
     N = int(input())
     a = [None] * N
+    total = 0
+    no_need = 0
     for i in range(N):
         a[i] = list(map(int, input().split()))
+        total += sum(a[i])
 
-    total = 0
-    dist = {}
     for k in range(N):
         # from
         for i in range(N):
             # to
             for j in range(N):
                 # compare from-to / from-経由地点-to
+                if i == k or j == k:
+                    continue
                 d = a[i][k] + a[k][j]
                 if a[i][j] > d:
                     return -1
-                else:
-                    dist[(i, j)] = d
+                elif a[i][j] == d:
+                    # 経由して同じであれば必要ない
+                    no_need += d
 
-    from pprint import pprint
-    pprint(a)
-    pprint(dist)
-
-    return total
-
+    # 対称なので半分にする
+    return (total - no_need) // 2
 
 if __name__ == '__main__':
     answer = main()
