@@ -1,0 +1,42 @@
+benchmark op(ms), N:10,000
+for 4.943µs
+add 4.532µs
+Sub 4.793µs
+mul 4.846µs
+div 8.09µs
+
+benchmark op(ms), N:100,000
+for 51.248µs
+add 50.47µs
+Sub 45.988µs
+mul 44.511µs
+div 81.268µs
+
+benchmark op(ms), N:1,000,000
+for 450.941µs
+add 426.145µs
+Sub 456.966µs
+mul 507.914µs
+div 788.474µs
+
+benchmark op(ms), N:10,000,000
+for 4.406662ms
+add 4.031161ms
+Sub 4.360061ms
+mul 4.109671ms
+div 7.886595ms
+
+benchmark op(ms), N:100,000,000
+for 49.08831ms
+add 44.433003ms
+Sub 41.700122ms
+mul 45.03269ms
+div 81.492496ms
+
+benchmark op(ms), N:1,000,000,000
+for 399.117405ms
+add 399.709592ms
+Sub 413.067744ms
+mul 454.939489ms
+div 796.226918ms
+
