@@ -8,8 +8,6 @@ def main():
 
 
 def benchmark_op(N):
-    """http://www.itmedia.co.jp/enterprise/articles/0908/22/news001.html
-    """
     print("benchmark op(ms), N:{:,d}".format(N))
     a = 0
 
