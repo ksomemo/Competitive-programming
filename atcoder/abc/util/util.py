@@ -1,7 +1,17 @@
+# queue関連:
+# => http://n-knuu.hatenablog.jp/entry/2015/05/30/183718
+# heapq: priority queue
+# dequeu: fast queue
 import heapq
 from bisect import bisect
 from collections import deque, Counter
-from itertools import permutations, combinations, product
+from itertools import (
+    # 直積/順列/組合せ/重複組合せ
+    product,
+    permutations,
+    combinations,
+    combinations_with_replacement
+)
 from statistics import mean, median, mode
 from math import factorial, hypot as euclidean_dist
 
@@ -42,3 +52,14 @@ def print_err(*args, **kwargs):
     """for debug"""
     import sys
     print(*args, file=sys.stderr, **kwargs)
+
+# char <-> int
+assert chr(49) == "1"
+assert chr(65) == "A"
+assert chr(97) == "a"
+assert ord("A") == 65
+assert ord("a") == 97
+
+# bit
+assert 32 << 2 == 128
+assert 128 >> 2 == 32
