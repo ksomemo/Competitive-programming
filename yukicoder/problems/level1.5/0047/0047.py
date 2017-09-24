@@ -19,5 +19,20 @@ def main():
         b *= 2
 
     print(ans)
+
+
+def main2():
+    # 10^8 100000000
+    # 2^26 67108864
+    # 2^27 134217728
+    N = int(input())
+
+    for p in range(27):
+        if N <= 2 ** p:
+            print(p)
+            return
+
+    print(27)
+
 if __name__ == '__main__':
-    main()
+    main2()
