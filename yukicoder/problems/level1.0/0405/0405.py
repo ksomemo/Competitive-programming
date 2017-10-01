@@ -2,12 +2,25 @@ def main():
     S1, T = input().split()
     T = int(T)
 
+    print(solve(S1, T))
+    return
+
     short_hand = r2a(S1)
     short_hand = (short_hand + T) % 12
     if short_hand == 0:
         short_hand = 12
 
     print(a2r(short_hand))
+
+
+def solve(S1, T):
+    r = ["I", "II", "III", "IIII",
+         "V", "VI", "VII", "VIII",
+         "IX", "X", "XI", "XII"]
+
+    short_hand = (r.index(S1) + T) % 12
+
+    return r[short_hand]
 
 
 def r2a(r):
