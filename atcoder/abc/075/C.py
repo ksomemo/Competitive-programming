@@ -1,3 +1,6 @@
+import copy
+
+
 def main():
     """
     自己ループを含まない
@@ -10,20 +13,38 @@ def main():
     N: <=50
     M: <= 50
 
-    ワーシャルフロイドと思ったが違いそう
-    閉路を構成していれば、ある辺を取り除いてもたどり着けるが、
-    それ以外の辺は橋となり取り除くとたどり着けない
-    閉路を求める
+    ある辺を取り除いてすべてのノードにたどり着けるか
+    すべてのノードを列挙する
+    ノードを辿ってみる（探索アルゴリズム）
+    たどれたらたどれたノードをため込む
+    終わったら列挙したノードと比較して同じならOK
     """
     N, M = map(int, input().split())
-    e = [
-        [0] * N
-        for _ in range(N)
-    ]
+    e = set()
     for _ in range(M):
         a, b = map(int, input().split())
-        e[a - 1][b - 1] = 1
-        e[b - 1][a - 1] = 1
+        e.add((a, b))
+
+    ans = 0
+    for k in e:
+        searched = set()
+        e_copy = copy.deepcopy(e)
+        e_copy.remove(k)
+
+        def dfs(v1):
+            searched.add(v1)
+            for v2 in range(1, N + 1):
+                if v2 in searched:
+                    continue
+                if (v1, v2) in e_copy or \
+                        (v2, v1) in e_copy:
+                    dfs(v2)
+
+        dfs(1)
+        if len(searched) < N:
+            ans += 1
+
+    print(ans)
 
 if __name__ == '__main__':
     main()
