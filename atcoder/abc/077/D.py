@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def main():
     """K の正の倍数の 10 進法での各桁の和としてありうる最小の値を求めてください。
 
@@ -19,5 +22,44 @@ def main():
 def sum_digits(n):
     return sum(map(int, list(str(n))))
 
+
+def main2():
+    """解説
+
+    https://img.atcoder.jp/arc084/editorial.pdf
+    https://www.youtube.com/watch?v=EwUlr0HXFDc
+    """
+    import sys
+
+    debug = sys.argv[-1] == "debug"
+    K = int(input())
+
+    q = deque([1])
+    inf = float("inf")
+    dp = [inf for _ in range(K)]
+    dp[1] = 0
+
+    # 01BFS
+    # cost 0 の辺の遷移は deque の先頭に要素を追加
+    # cost 1 の辺の遷移は deque の末尾に要素を追加
+    while q:
+        idx = q.popleft()
+        x = dp[idx]
+        m1 = (idx * 10) % K
+        m2 = (idx + 1) % K
+        if dp[m1] > x:
+            dp[m1] = x
+            q.appendleft(m1)
+        if dp[m2] > x + 1:
+            dp[m2] = x + 1
+            q.append(m2)
+
+        if debug:
+            print((m1, m2), dp, q, file=sys.stderr)
+            print("-" * 10, file=sys.stderr)
+
+    print(dp[0] + 1)
+
+
 if __name__ == '__main__':
-    main()
+    main2()
