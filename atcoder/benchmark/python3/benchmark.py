@@ -1,9 +1,16 @@
-from datetime import datetime as dt
+import sys
+import time
 
 
 def main():
     # 10 * 1000 * 1000
-    for _ in range(4, 7 + 1):
+    pow = 7
+    attr_pypy = "pypy_version_info"
+    if hasattr(sys, attr_pypy):
+        print(sys.version)
+        pow = 8
+
+    for _ in range(4, pow + 1):
         benchmark_op(10 ** _)
 
 
@@ -11,30 +18,30 @@ def benchmark_op(N):
     print("benchmark op(ms), N:{:,d}".format(N))
     a = 0
 
-    d = dt.now()
+    t = time.time()
     for i in range(1, N + 1):
         pass
-    print("for", (dt.now() - d).microseconds / 1000)
+    print("for", "{:.10f}".format((time.time() - t) * 1000), sep='\t')
 
-    d = dt.now()
+    t = time.time()
     for i in range(1, N + 1):
         a += i + 10000000
-    print("add", (dt.now() - d).microseconds / 1000)
+    print("add", "{:.10f}".format((time.time() - t) * 1000), sep='\t')
 
-    d = dt.now()
+    t = time.time()
     for i in range(1, N + 1):
         a += i - 10000000
-    print("sub", (dt.now() - d).microseconds / 1000)
+    print("sub", "{:.10f}".format((time.time() - t) * 1000), sep='\t')
 
-    d = dt.now()
+    t = time.time()
     for i in range(1, N + 1):
         a += i * i
-    print("mul", (dt.now() - d).microseconds / 1000)
+    print("mul", "{:.10f}".format((time.time() - t) * 1000), sep='\t')
 
-    d = dt.now()
+    t = time.time()
     for i in range(1, N + 1):
         a += 10000000 / i
-    print("div", (dt.now() - d).microseconds / 1000)
+    print("div", "{:.10f}".format((time.time() - t) * 1000), sep='\t')
 
     print("")
 
