@@ -14,7 +14,7 @@ def main():
 
     for mark in ("S", "H", "C", "D"):
         a = nums - cards[mark]
-        for num in a:
+        for num in sorted(list(a)):
             print(mark, num)
 
 

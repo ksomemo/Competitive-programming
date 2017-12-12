@@ -19,7 +19,7 @@ def main():
             room_state = []
             for r in range(1, n_r + 1):
                 room_state.append(state[(b, f, r)])
-            print(" ".join(map(str, room_state)))
+            print(" " + " ".join(map(str, room_state)))
         if b != n_b:
             print("#" * 20)
 

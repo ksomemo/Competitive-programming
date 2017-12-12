@@ -1,5 +1,5 @@
 def main():
-    W = input()
+    W = input().lower()
     words = []
     while True:
         T = input()
@@ -8,7 +8,7 @@ def main():
 
         words.extend(T.split(" "))
 
-    ans = sum(1 for word in words if word == W)
+    ans = sum(1 for word in words if word.lower() == W)
 
     print(ans)
 

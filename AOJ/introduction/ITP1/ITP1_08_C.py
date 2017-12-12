@@ -1,9 +1,10 @@
+import sys
 import string
 from collections import Counter
 
 
 def main():
-    s = input()
+    s = sys.stdin.read()
     c = Counter(s.lower())
 
     for char in string.ascii_lowercase:

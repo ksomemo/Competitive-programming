@@ -8,7 +8,7 @@ def main():
         hs = [int(input()) for _ in range(n_shuffle)]
 
         for h in hs:
-            S = S[-h:] + S[:-h]
+            S = S[h:] + S[:h]
 
         print(S)
 
