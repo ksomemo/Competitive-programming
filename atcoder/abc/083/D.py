@@ -1,3 +1,13 @@
+import sys
+
+change = False
+debug = False
+
+
+def print_err(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+
 def main():
     """
     0 と 1 からなる文字列 S が与えられます。
@@ -19,7 +29,7 @@ def f(S):
     ※K以上の反転可能であるため
 
     000: OK
-    001, 110:  -> 100, 011 
+    001, 110:  -> 100, 011
     010, 101:
       11を最終的に反転するように修正していく
         101: 1-3 all
@@ -31,7 +41,32 @@ def f(S):
     K=3とすれば
     000 をまず反転、その後K+1まで反転すれば、初期状態からK+1番目のみ反転できる
     """
-    pass
+    n = len(S)
+    ans = n
+
+    # 反転確認
+    table = str.maketrans('01', '10')
+    for k in range(1, n):
+        if S[k] == S[k - 1]:
+            continue
+
+        t = max(k, n - k)
+        ans = min(ans, t)
+
+        # 反転を利用して異なる部分を変更
+        # 要素数の多い方を対称の異なる文字含めて反転
+
+        # CPython3, PyPy: TLE
+        if change:
+            if t == k:
+                S = S[:t].translate(table) + S[t:]
+            else:
+                S = S[:k] + S[k:].translate(table)
+
+            if debug:
+                print_err("t:", t, "k:", k, "S:", S, sep="\t")
+
+    print(ans)
 
 if __name__ == '__main__':
     main()
