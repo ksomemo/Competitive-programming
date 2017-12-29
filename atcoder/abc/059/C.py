@@ -48,6 +48,33 @@ e.g. N=4 a=[0 0 0 1]
 """
 
 
+def main2():
+    """
+    累積和は、偶奇,奇偶のどちらかの数列になるので２種類試す
+    """
+    n = int(input())
+    A = list(map(int, input().split()))
+
+    ans = float("inf")
+    for sign in (1, -1):
+        s, n_op = 0, 0
+        for a in A:
+            s += a
+            # if sign == 1 and s <= 0:
+            # elif sign == -1 and s >= 0:
+            if s * sign <= 0:
+                # 調整
+                n_op += abs(s) + 1
+                s = sign
+
+            # 偶奇の入れ替え
+            sign *= -1
+
+        ans = min(ans, n_op)
+
+    print(ans)
+
+
 def main():
     n = int(input())
     a = list(map(int, input().split()))
@@ -92,4 +119,4 @@ def main():
     print(ans)
 
 if __name__ == '__main__':
-    main()
+    main2()
