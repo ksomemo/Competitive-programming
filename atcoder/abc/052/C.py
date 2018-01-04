@@ -1,3 +1,6 @@
+from collections import Counter
+
+
 def main():
     """
     1 <= N <= 10 ** 3
@@ -15,6 +18,10 @@ def main():
         重複除外(どうする) => 6C2: 2_1,2_2と2_2,2_3
 
         71についても同様かつ、72の約数との組合せ => 膨大な数になる
+
+    解説:
+    ある整数 x が、素因数分解によって x = p^n × q^m × ... (p, q, ...は素数) と表せる時、
+    x の約数の個数は(n + 1) × (m + 1) × ... となります。
     """
     N = int(input())
 
@@ -22,9 +29,44 @@ def main():
         print(1)
         return
 
-    ans = 2
+    table = eratosthenes(N)
+    factors = Counter()
+    for i in range(2, N + 1):
+        factors += factorize(i, table)
 
+    ans = 1
+    for count in factors.values():
+        ans = ans * (count + 1) % (10 ** 9 + 7)
     print(ans)
+
+
+def factorize(N, table):
+    factors = Counter()
+    x = N
+    for i in [2] + list(range(3, N + 1, 2)):
+        if table[i]:
+            while x % i == 0:
+                if i in factors:
+                    factors[i] += 1
+                else:
+                    factors[i] = 1
+                x = x // i
+
+    return factors
+
+
+def eratosthenes(N):
+    a = [True for _ in range(N + 1)]
+    a[0] = False
+    a[1] = False
+
+    for i in range(2, N + 1):
+        if a[i]:
+            for j in range(i + 1, N + 1):
+                if j % i == 0:
+                    a[j] = False
+
+    return a
 
 if __name__ == '__main__':
     main()
