@@ -1,9 +1,7 @@
 def main():
     A = int(input())
 
-    ans = AC(A)
-
-    print(ans)
+    AC(A)
 
 
 def AC(A):
@@ -13,8 +11,18 @@ def AC(A):
         xy = x * y
         ans = max(ans, xy)
 
-    return ans
+    print(ans)
 
+
+def slideshare(A):
+    """
+    問題文をよく読んでなかった…正の偶数より2で割り切れる
+    https://mathtrain.jp/amgm
+    a + b >= 2 * math.sqrt(a * b)
+    """
+    x = A // 2
+    ans = x * x
+    print(ans)
 
 if __name__ == '__main__':
     main()
