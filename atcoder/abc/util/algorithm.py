@@ -55,6 +55,126 @@ def cumulative_sum_method():
     pass
 
 
+def imos_1_0():
+    """https://imoz.jp/algorithms/imos_method.html
+    """
+    # 0時~5時まで
+    E = 5
+    start = [1, 3, 2, 4]
+    end = [4, 5, 4, 5]
+    N = len(start)
+
+    def no_imos():
+        table = [0] * (E + 1)
+
+        print("-" * 10)
+        print("no_imos")
+        print(table)
+
+        for i in range(N):
+            for t in range(start[i], end[i]):
+                table[t] += 1
+                print(i, t, table)
+
+        return max(table)
+
+    def imos():
+        print("-" * 10)
+        print("imos")
+
+        table = [0] * (E + 1)
+        for i in range(N):
+            table[start[i]] += 1
+            table[end[i]] -= 1
+            print(i, table)
+
+        for i in range(1, E + 1):
+            table[i] += table[i - 1]
+            print(i, table)
+
+        return max(table)
+
+    print(no_imos())
+    print(imos())
+
+
+def imos_2_1():
+    """
+    2 dimensions
+    """
+    W, H = 6, 6
+
+    # x,y,edge length
+    xyl = [
+        (0, 0, 4),
+        (1, 3, 2),
+        (2, 2, 4),
+    ]
+    import os
+    import time
+    from pprint import pprint
+
+    def clear():
+        time.sleep(0.5)
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+    def no_imos():
+        tiles = [
+            [0] * W
+            for _ in range(H)
+        ]
+
+        for x, y, l in xyl:
+            for _x in range(x, x + l):
+                for _y in range(y, y + l):
+                    tiles[_y][_x] += 1
+                    clear()
+                    print("no_imos")
+                    print((x, y, l), _x, _y)
+                    pprint(tiles)
+
+        return max(max(row)for row in tiles)
+
+    def imos():
+        tiles = [
+            [0] * (W + 1)
+            for _ in range(H + 1)
+        ]
+
+        for x, y, l in xyl:
+            tiles[y][x] += 1
+            tiles[y][x + l] -= 1
+            tiles[y + l][x] -= 1
+            tiles[y + l][x + l] += 1
+
+            clear()
+            print("imos", (x, y, l))
+            pprint(tiles)
+
+        # W
+        for y in range(H):
+            for x in range(1, W):
+                tiles[y][x] += tiles[y][x - 1]
+
+                clear()
+                print("imos", (x, y))
+                pprint(tiles)
+        # H
+        for y in range(1, H):
+            for x in range(W):
+                tiles[y][x] += tiles[y - 1][x]
+
+                clear()
+                print("imos", (x, y))
+                pprint(tiles)
+
+        return max(max(row)for row in tiles)
+
+    print(no_imos())
+    input("Please press the Enter key, if start imos")
+    print(imos())
+
+
 def two_pointers():
     """しゃくとり法
 
