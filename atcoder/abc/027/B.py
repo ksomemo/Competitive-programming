@@ -8,6 +8,30 @@ def main():
         print(-1)
         return
 
+    etitorial(N, A, mean)
+
+
+def etitorial(N, A, mean):
+    """解説より
+
+    2つの島(left, right)に着目した時
+    left側/right側それぞれに十分な人数が存在する場合、
+    橋をかけずに人は調達できる
+    """
+    left = 0
+    right = sum(A)
+    ans = 0
+    for i in range(1, N):
+        a = A[i-1]
+        left += a
+        right -= a
+        l_need = i * mean
+        r_need = (N-i) * mean
+        if left < l_need or right < r_need:
+            ans += 1
+
+    print(ans)
+
 
 def WA(N, A, mean):
     bridge = {(i, i+1): False for i in range(N-1)}
