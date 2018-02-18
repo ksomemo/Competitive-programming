@@ -30,26 +30,18 @@ def main():
 
 
 def bfs(S, H, W):
-    if S[0][0] == "#":
-        print(-1)
-        return
-
-    n_pos = [(0, 1), (1, 0)]
-    q = deque([(0, 1), (1, 0)])
+    # 距離を追加, 経路情報は必要ない
+    q = deque([(0, 0, 0)])
     visited = [
         [False] * W
         for _ in range(H)
     ]
     visited[0][0] = True
-    graph = {(0, 0): n_pos}
 
     goal = False
+    dist = 0
     while q:
-        x, y = q.pop()
-        visited[y][x] = True
-        if S[y][x] == "#":
-            continue
-
+        x, y, dist = q.popleft()
         if (x, y) == (W-1, H-1):
             goal = True
             break
@@ -57,16 +49,23 @@ def bfs(S, H, W):
         for dx in (-1, 1):
             nx = x+dx
             if 0 <= nx < W:
-                if not visited[y][nx]:
-                    q.appendleft((nx, y))
+                if S[y][nx] == "." and not visited[y][nx]:
+                    # ここで訪問済みにしないとTLE
+                    q.append((nx, y, dist+1))
+                    visited[y][nx] = True
         for dy in (-1, 1):
             ny = y+dy
             if 0 <= ny < H:
-                if not visited[ny][x]:
-                    q.appendleft((x, ny))
+                if S[ny][x] == "." and not visited[ny][x]:
+                    q.append((x, ny, dist+1))
+                    visited[ny][x] = True
 
     if goal:
-        print("calc score")
+        w_count = 0
+        for s in S:
+            w_count += s.count(".")
+        # startは通ってないので距離に含まれない
+        print(w_count - dist - 1)
     else:
         print(-1)
 
