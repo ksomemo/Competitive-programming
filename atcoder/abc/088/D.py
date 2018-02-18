@@ -38,6 +38,10 @@ def bfs(S, H, W):
     ]
     visited[0][0] = True
 
+    d_xy = list(zip(
+        (0, 1, 0, -1),
+        (1, 0, -1, 0)
+    ))
     goal = False
     dist = 0
     while q:
@@ -46,19 +50,13 @@ def bfs(S, H, W):
             goal = True
             break
 
-        for dx in (-1, 1):
-            nx = x+dx
-            if 0 <= nx < W:
-                if S[y][nx] == "." and not visited[y][nx]:
+        for dx, dy in d_xy:
+            nx, ny = x+dx, y+dy
+            if 0 <= nx < W and 0 <= ny < H:
+                if S[ny][nx] == "." and not visited[ny][nx]:
                     # ここで訪問済みにしないとTLE
-                    q.append((nx, y, dist+1))
-                    visited[y][nx] = True
-        for dy in (-1, 1):
-            ny = y+dy
-            if 0 <= ny < H:
-                if S[ny][x] == "." and not visited[ny][x]:
-                    q.append((x, ny, dist+1))
-                    visited[ny][x] = True
+                    q.append((nx, ny, dist+1))
+                    visited[ny][nx] = True
 
     if goal:
         w_count = 0
