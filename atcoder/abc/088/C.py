@@ -25,6 +25,47 @@ def main():
         for _ in range(N)
     ]
 
+    editorial(C, N)
+
+
+def editorial(C, N):
+    a = [None] * N
+    b = [None] * N
+
+    a[0] = 0
+    for i in range(N):
+        # c - a[0]だけど0なので省略
+        b[i] = C[0][i]
+    for i in range(N):
+        a[i] = C[i][0] - b[0]
+
+    for i in range(N):
+        for j in range(N):
+            if C[i][j] != a[i] + b[j]:
+                print("No")
+                return
+
+    print("Yes")
+
+
+def editorial2(C, N):
+    """
+    3 x 3:
+    abc
+    def
+    ghi
+
+    a+e=b+d => (a1+b1)+(a2+b2)=(a1+b2)+(a2+b1)
+    b+f=c+e
+    d+h=e+g
+    e+i=f+h
+
+    2 x 2のgridをつくり、その対角要素の和/逆対角要素の和が等しい
+    """
+    pass
+
+
+def AC(C, N):
     a = is_valid_a(C, N)
     if not a:
         print("No")
