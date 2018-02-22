@@ -5,10 +5,44 @@ def main():
         for i in range(N)
     ]
 
-    solve(N, H, ab)
+    # solve(N, H, ab)
+    editorial(H, ab)
+
+
+def editorial(H, ab):
+    """
+    max_a より大きいbを使う方針はOK
+    max_a を持ち max_aより大きいbを持つ刀をどうするか？
+
+    基本は合っていた
+    投げた後のことを考えていたが
+    投げるのは倒すときでよいので、それまでは切り続ける
+    というのが解説の投げた後も使って良いということ
+        b ... b + (a_max ... a_max + b_last)
+        b ... b + (b_last + a_max ... a_max)
+    """
+    sorted_a = sorted(ab, key=lambda x: x[1], reverse=True)
+    sorted_b = sorted(ab, key=lambda x: x[2], reverse=True)
+    max_a = sorted_a[0][1]
+
+    ans = 0
+    for _, _, b in sorted_b:
+        if max_a > b:
+            break
+
+        H -= b
+        ans += 1
+        if H <= 0:
+            print(ans)
+            return
+
+    ans += (H + max_a - 1) // max_a
+    print(ans)
 
 
 def solve(N, H, ab):
+    """ひどい…
+    """
     from collections import Counter
 
     throwed = [False] * N
@@ -51,7 +85,7 @@ def solve(N, H, ab):
             # 最大Aを残して投げればよさそう?
             # あとはAで対処、またはBを投げて終了
             for k in range(max_b_i, N):
-                i, a, b -= sorted_b[i]
+                # i, a, b -= sorted_b[i]
                 if i == max_a_i:
                     continue
                 H -= b
