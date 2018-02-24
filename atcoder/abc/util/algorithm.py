@@ -233,7 +233,94 @@ def bellmanford():
     更新されなくなるまで続ける
         負の閉路があると無限に更新されるらしい
     """
-    pass
+    N = 7
+    start = 0
+    goal = 6
+    edges = [
+        (0, 1, 9),
+        (0, 2, 2),
+        (2, 1, 6),
+        (1, 4, 1),
+        (1, 3, 3),
+        (2, 3, 2),
+        (2, 5, 9),
+        (3, 4, 5),
+        (3, 5, 6),
+        (5, 4, 3),
+        (5, 6, 4),
+        (4, 6, 7),
+    ]
+    solove_bellmanford(N, start, goal, edges)
+
+    N = 4
+    start = 0
+    goal = 3
+    edges = [
+        (0, 1, 2),
+        (1, 0, 1),
+        (0, 2, 4),
+        (2, 1, 3),  # idx:3, change when after problems
+        (1, 3, 1),
+        (2, 3, 1),
+    ]
+
+    print("-"*10)
+    print("directed:")
+    solove_bellmanford(N, start, goal, edges, directed=True)
+
+    print("-"*10)
+    print("directed contains muinus:")
+    edges[3] = (2, 1, -3)
+    solove_bellmanford(N, start, goal, edges, directed=True)
+
+    print("-"*10)
+    print("directed contains muinus cycle:")
+    edges[3] = (2, 1, -6)
+    solove_bellmanford(N, start, goal, edges, directed=True)
+
+
+def solove_bellmanford(N, start, goal, edges, directed=False):
+    cost = [float("inf") for _ in range(N)]
+    cost[start] = start
+    con = [-1] * N
+    con[start] = start
+
+    m_cycle = 0
+    for i in range(N):
+        up = 0
+        for edge in edges:
+            src,  dst, e = edge
+
+            if cost[dst] > cost[src] + e:
+                cost[dst] = cost[src] + e
+                up = 1
+                con[dst] = src
+
+            if not directed:
+                if cost[src] > cost[dst] + e:
+                    cost[src] = cost[dst] + e
+                    con[src] = dst
+                    up = 1
+
+        if up == 0:
+            break
+        elif i == N-1:
+            m_cycle = 1
+
+    path = [goal]
+    dst = goal
+    while True:
+        src = con[dst]
+        if src == 0:
+            break
+        else:
+            path.append(src)
+        dst = src
+
+    print("cost:", cost)
+    print("connection:", con)
+    print("reversed path to goal:", path)
+    print("muinus cycle", m_cycle)
 
 
 def dijkstra():
