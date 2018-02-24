@@ -38,6 +38,21 @@ except:
         return float(n / d)
 
 
+def my_gcd_rec(a, b):
+    c = a % b
+    if c == 0:
+        return b
+    # a < bのとき, bでは割れないため単純に入れ替えになるため大小判定不要
+    return my_gcd_rec(b, c)
+
+
+def my_gcd(a, b):
+    while b > 0:
+        a, b = b, a % b
+    # b == 0, ans==前のloopのb より、今のaを返す
+    return a
+
+
 def lcm(x, y):
     return x * y // gcd(x, y)
 
