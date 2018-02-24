@@ -1,3 +1,9 @@
+"""
+utility
+
+syntax check by py_compile module
+    python -m py_compile util.py
+"""
 # queue関連:
 # => http://n-knuu.hatenablog.jp/entry/2015/05/30/183718
 # heapq: priority queue
@@ -64,6 +70,44 @@ def mid(low, high, overflow=True):
         return low + (high - low) // 2
     else:
         return (low + high) // 2
+
+
+def dir4(x, y):
+    dx = (0, 1, 0, -1)
+    dy = rot_right_list(dx, 1)
+    # => (-1, 0, 1, 0)
+
+    for _dx, _dy in zip(dx, dy):
+        new_x = x + _dx
+        new_y = x + _dy
+        # 盤面からはみ出てout of indexにならないように判定
+        # x_min <= new_x <= x_max
+
+
+def dir8(x, y):
+    d = (0, 1, -1)
+    for dx in d:
+        for dy in d:
+            if (dx, dy) == (0, 0):
+                continue
+
+
+def rot_right_list(a, n, use_dq=False):
+    """
+    shiftした組合せを見たい時などに利用
+
+    left: (1,2,0)
+    src:  (0,1,2)
+    right:(2,0,1)
+    """
+    if use_dq:
+        q = deque(a)
+        q.rotate(n)
+        return list(q)
+    else:
+        # n>0:left, n<0:right
+        n = -n
+        return a[n:] + a[:n]
 
 
 # char <-> int
