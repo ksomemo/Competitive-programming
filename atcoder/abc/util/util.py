@@ -53,6 +53,19 @@ def print_err(*args, **kwargs):
     import sys
     print(*args, file=sys.stderr, **kwargs)
 
+
+def mid(low, high, overflow=True):
+    """
+     l + (h - l) / 2
+    (2l + h - l) / 2
+    (l + h) / 2
+    """
+    if overflow:
+        return low + (high - low) // 2
+    else:
+        return (low + high) // 2
+
+
 # char <-> int
 assert chr(49) == "1"
 assert chr(65) == "A"
