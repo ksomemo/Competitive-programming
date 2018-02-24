@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def bubble_sort():
     pass
 
@@ -26,12 +29,194 @@ def a_star():
     pass
 
 
-def dfs():
-    pass
+def dfs_bfs():
+    """
+    dfs/bfs maze matrix and graph
+    """
+    graph_main()
+    array_main()
 
 
-def bfs():
-    pass
+def array_main():
+    """
+    SからGを探す
+    ■は通れる
+    □は通れない
+    """
+    maze_str = """
+        Ｓ■■■■□
+        □■□□□■
+        ■■■□■■
+        ■□■□■□
+        ■□■■■□
+        ■□■□■Ｇ
+    """
+    start = (0, 0)
+    goal = (5, 5)
+
+    maze = maze_str.splitlines()
+    maze = map(lambda x: list(x.strip()), maze)
+    maze = [line for line in maze if line]
+
+    print("dfs_array", "-"*10)
+    visited = visited_maze(maze)
+    dfs_array(maze, visited, start, goal)
+
+    print("bfs_array", "-"*10)
+    visited = visited_maze(maze)
+    bfs_array(maze, visited, start, goal)
+
+
+def visited_maze(maze):
+    visited = [
+        [0 for _ in l]
+        for l in maze
+    ]
+    return visited
+
+
+def graph_main():
+    """
+    (1)-(2)--(3)--(6)
+           |_(4)--(7)
+           |    |_(8)
+           |_(5)--(9)
+
+    1から開始して8を探す
+    """
+    graph = {
+        1: [2],
+        2: [3, 4, 5],
+        3: [6],
+        4: [7, 8],
+        5: [9],
+    }
+    start = 1
+    goal = 8
+
+    print("dfs_graph", "-"*10)
+    dfs_graph(graph, start, goal)
+
+    print("bfs_graph", "-"*10)
+    bfs_graph(graph, start, goal)
+
+    print("dfs_graph_rec", "-"*10)
+    found = dfs_graph_rec(graph, start, goal)
+    print("found:", found)
+
+
+def dfs_graph_rec(graph, start, goal):
+    print(start)
+    if start == goal:
+        return True
+
+    for v in graph.get(start, []):
+        if dfs_graph_rec(graph, v, goal):
+            return True
+
+    return False
+
+
+def dfs_graph(graph, start, goal):
+    stack = []
+    for x in graph.get(start, []):
+        stack.append(x)
+
+    print("start:", start)
+    while stack:
+        v = stack.pop()
+        print(v)
+        if v == goal:
+            print("found")
+            return
+        for x in graph.get(v, []):
+            stack.append(x)
+
+    print("not found")
+
+
+def movable_pos(x, y, W, H):
+    pos = []
+    for dx in (-1, 1):
+        if 0 <= x + dx < W:
+            pos.append((x+dx, y))
+    for dy in (-1, 1):
+        if 0 <= y + dy < W:
+            pos.append((x, y+dy))
+
+    return pos
+
+
+def dfs_array(maze, visited, start, goal):
+    (sx, sy) = start
+    visited[sy][sx] = 1
+    W, H = len(maze[0]), len(maze)
+
+    stack = []
+    for x, y in movable_pos(sx, sy, W, H):
+        if visited[y][x] or maze[y][x] == "□":
+            continue
+        stack.append((x, y))
+
+    while stack:
+        x, y = stack.pop()
+        print(y, x)
+        visited[y][x] = 1
+        if (x, y) == goal:
+            print("found")
+            return
+
+        for mx, my in movable_pos(x, y, W, H):
+            if visited[my][mx] or maze[my][mx] == "□":
+                continue
+            stack.append((mx, my))
+
+    print("not found")
+
+
+def bfs_array(maze, visited, start, goal):
+    (sx, sy) = start
+    visited[sy][sx] = 1
+    W, H = len(maze[0]), len(maze)
+
+    queue = deque()
+    for x, y in movable_pos(sx, sy, W, H):
+        if visited[y][x] or maze[y][x] == "□":
+            continue
+        queue.append((x, y))
+
+    while queue:
+        x, y = queue.popleft()
+        print(y, x)
+        visited[y][x] = 1
+        if (x, y) == goal:
+            print("found")
+            return
+
+        for mx, my in movable_pos(x, y, W, H):
+            if visited[my][mx] or maze[my][mx] == "□":
+                continue
+            queue.append((mx, my))
+
+    print("not found")
+
+
+def bfs_graph(graph, start, goal):
+    queue = deque()
+    for x in graph.get(start, []):
+        queue.append(x)
+
+    print("start:", start)
+    while queue:
+        v = queue.popleft()
+        print(v)
+        if v == goal:
+            print("found")
+            return
+        for x in graph.get(v, []):
+            queue.append(x)
+
+    print("not found")
 
 
 def bellmanford():
