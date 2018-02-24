@@ -178,6 +178,45 @@ def factorize(N):
     return factors
 
 
+def _round(x, d=0):
+    """
+    https://qiita.com/sak_2/items/b2dd8bd1c4e4b0788e9a#comment-ed35e21b3969ca6ae77e
+    """
+    p = 10 ** d
+    return (x * p * 2 + 1) // 2 / p
+
+
+def _round_decimal(x, d=0, asfloat=True):
+    """
+    https://stackoverflow.com/questions/21839140/python-3-rounding-behavior-in-python-2
+    https://docs.python.org/ja/3.6/library/decimal.html
+
+    for float in python3
+
+        f(1.255,  d=2) # => 1.25  orz
+        f(1.2555, d=2) # => 1.26  ok
+        f(1.2555, d=3) # => 1.256 ok
+
+    1.255 * 10
+    # => 12.549999999999999
+
+    1.255 + sys.float_info.epsilon
+    # => 1.2550000000000001
+
+    % ~/.pyenv/versions/2.7.13/bin/python -c "print(round(1.255, 2))"
+    # => 1.25
+    """
+    import decimal
+    x = decimal.Decimal(x)
+    d = "1e-{}".format(d)
+    r = x.quantize(decimal.Decimal(d), rounding=decimal.ROUND_HALF_UP)
+
+    if asfloat:
+        return float(r)
+    else:
+        return r
+
+
 # char <-> int
 assert chr(49) == "1"
 assert chr(65) == "A"
