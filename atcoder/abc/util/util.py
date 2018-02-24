@@ -8,7 +8,9 @@ syntax check by py_compile module
 # => http://n-knuu.hatenablog.jp/entry/2015/05/30/183718
 # heapq: priority queue
 # dequeu: fast queue
+import math
 import heapq
+
 from bisect import bisect
 from collections import deque, Counter
 from itertools import (
@@ -123,6 +125,57 @@ def rot_right_list(a, n, use_dq=False):
         # n>0:left, n<0:right
         n = -n
         return a[n:] + a[:n]
+
+
+def eratosthenes(N):
+    """エラトステネスの篩
+
+    TODO: もっと速い方法
+    """
+    is_prime = [True for _ in range(N + 1)]
+    is_prime[0] = False
+    is_prime[1] = False
+    max_prime = int(math.sqrt(N))
+    for n in range(2, max_prime + 1):
+        if is_prime[n]:
+            # n-1までは判定済みのため除外されている
+            # => max_prime導入も同じ理由
+            for i in range(n * n, N + 1, n):
+                is_prime[i] = False
+    return is_prime
+
+
+def factorize(N):
+    """素因数分解
+
+    TODO: もっと速い方法
+    素因数がある場合は範囲をsqrtで狭められるが、ない場合愚直に探してしまう
+    N以下の素数を見つけて、それだけで対応すれば速いはず
+    """
+    factors = []
+    while True:
+        if N % 2 == 0:
+            factors.append(2)
+            N //= 2
+        else:
+            break
+    m = int(math.sqrt(N))
+    i = 3
+    while i <= m:
+        add = False
+        while True:
+            if N % i == 0:
+                factors.append(i)
+                N //= i
+                add = True
+            else:
+                break
+        if add:
+            m = int(math.sqrt(N))
+        i += 2
+    if N > 1:
+        factors.append(N)
+    return factors
 
 
 # char <-> int
