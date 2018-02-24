@@ -217,6 +217,42 @@ def _round_decimal(x, d=0, asfloat=True):
         return r
 
 
+def idx_cond_loop(x, n, interval, start):
+    """ABC 001-C の風向条件判定 自作
+
+    0 <= x < 60 のような一定範囲に対して、
+    始点をずらしてからの等間隔に区切った時
+    どの区間に所属するか
+
+    0:       x < 10 or x >= 55
+    1: 10 <= x < 25
+    2: 25 <= x < 40
+    3: 40 <= x < 55
+    """
+    ans = 0
+    for i in range(n):
+        if x < i * interval + start:
+            ans = i
+            break
+    return ans
+
+
+def idx_range(x, n, interval, start):
+    """ABC 001-C の解説にあった計算式
+
+    https://www.slideshare.net/chokudai/abc001
+
+    x - y: x以上y未満
+    start: 0    | start: 10
+    interval: 15| interval: 15
+    0:  0 - 15  |  0 - 10, 55 - 60
+    1: 15 - 30  | 10 - 25
+    2: 30 - 45  | 25 - 40
+    3: 45 - 60  | 40 - 55
+    """
+    return (x + (interval - start)) // interval % n
+
+
 # char <-> int
 assert chr(49) == "1"
 assert chr(65) == "A"
