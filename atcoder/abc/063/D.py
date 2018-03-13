@@ -1,7 +1,11 @@
 def main():
-    N, A, B = list(map(int, input().strip().split()))
-    hs = [int(input().strip()) for _ in range(N)]
+    N, A, B = list(map(int, input().split()))
+    hs = [int(input()) for _ in range(N)]
 
+    TLE(N, A, B, hs)
+
+
+def TLE(N, A, B, hs):
     answer = 0
     max_hp = max(hs)
     while max_hp > 0:
@@ -18,6 +22,7 @@ def main():
         answer += 1
 
     print(answer)
+
 
 if __name__ == '__main__':
     main()
