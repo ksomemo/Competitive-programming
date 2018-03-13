@@ -2,6 +2,9 @@ def main():
     # not use N
     _ = int(input().strip())
     S = input().strip()
+
+
+def no_submittion(S):
     add_S = ""
     # 追加するそれぞれの括弧の数
     n_left = 0

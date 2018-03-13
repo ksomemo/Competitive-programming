@@ -14,12 +14,16 @@ def main():
     N = int(input().strip())
     pos = [list(map(int, input().strip().split()))
            for i in range(N)]
+
+
+def no_submittion(N, pos):
     for i in range(N):
         for k in range(i + 1, N):
             a, b = pos[i]
             c, d = pos[k]
             cost = min(abs(a - c), abs(b - d))
             print([i, k], cost, pos[i], pos[k])
+
 
 if __name__ == '__main__':
     main()
