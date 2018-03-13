@@ -25,6 +25,36 @@ def heap_sort():
     pass
 
 
+def _bisect_LR(a, x, right=True, verbose=False):
+    """https://github.com/python/cpython/blob/3.6/Lib/bisect.py
+
+    cpp: upper_bound/lower_bound 
+    """
+    low = 0
+    hi = len(a)
+
+    if verbose:
+        print("my_bisect", a, x)
+        print("right:", right)
+
+    while low < hi:
+        mid = (low + hi) // 2
+        if verbose:
+            print(low, hi, mid)
+        if right:
+            if x < a[mid]:
+                hi = mid
+            else:
+                low = mid + 1
+        else:
+            if a[mid] < x:
+                low = mid + 1
+            else:
+                hi = mid
+
+    return low
+
+
 def a_star():
     pass
 

@@ -253,6 +253,12 @@ def idx_range(x, n, interval, start):
     return (x + (interval - start)) // interval % n
 
 
+def my_divmod(x, y):
+    a = x // y
+    b = x - a * y
+    return (a, b)
+
+
 # char <-> int
 assert chr(49) == "1"
 assert chr(65) == "A"
