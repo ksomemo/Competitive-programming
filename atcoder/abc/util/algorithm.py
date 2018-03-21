@@ -28,7 +28,18 @@ def heap_sort():
 def _bisect_LR(a, x, right=True, verbose=False):
     """https://github.com/python/cpython/blob/3.6/Lib/bisect.py
 
-    cpp: upper_bound/lower_bound 
+    cpp: upper_bound/lower_bound
+
+    bisect_right: bisectはrightのalias
+        sort順を保ったままaにxを挿入できるindexを返す
+        f([1,2,2,3], 2) => 4を返す
+        同じ2を区別した時、4の位置に2を挿入しても2の位置は変わらず安定
+        xより大きい要素の個数: len(a) - f()
+        x以下の要素の個数: f()
+    bisect_left:
+        f([1,2,2,3], 2) => 1を返す
+        xより小さい要素の個数: f()
+        x以上の要素の個数: len(a) - f()
     """
     low = 0
     hi = len(a)

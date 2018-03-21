@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def main():
     """
     ab: red
@@ -11,15 +14,16 @@ def main():
     N = int(input())
 
     ab = [
-        tuple(map(int,input().split()))
+        tuple(map(int, input().split()))
         for _ in range(N)
     ]
     cd = [
-        tuple(map(int,input().split()))
+        tuple(map(int, input().split()))
         for _ in range(N)
     ]
 
     f(N, ab, cd)
+
 
 def f(N, ab, cd):
     """
@@ -33,26 +37,32 @@ def f(N, ab, cd):
             cd permutation N!
             N! * N!
 
-    b1-a1
-    b1-a2
+    左下にある赤は価値が高い
+    x座標の小さい青から始めているので, 赤x座標は青xより小さいものが対象
+    y座標が高いものを選ぶのは
+    選定中の赤座標と次の青と比較した時,
+        次の青は今の青よりxは大きい
+        つまり今y選定している赤のxより必ず大きいためどのx座標であるかは気にならない
+        yが小さいものとペアにしたとき,とらなかったmax_yが次の青yより大きい可能性があるため
     """
-    from collections import deque
-    ab = sorted(ab, reverse=True)
     cd = deque(sorted(cd))
 
     used = [False] * N
     ans = 0
     while cd:
         c, d = cd.popleft()
-        print((c, d), "----------")
+        ai, ay = None, -1
         for i, (a, b) in enumerate(ab):
-            print(i, (a, b))
             if used[i]:
                 continue
             if a < c and b < d:
-                ans += 1
-                used[i] = True
-                break
+                if b > ay:
+                    ai, ay = i, b
+
+        if ai is not None:
+            # sorted abに対して見つかった瞬間にペアにしていたがy判断をする
+            used[ai] = True
+            ans += 1
 
     print(ans)
 
