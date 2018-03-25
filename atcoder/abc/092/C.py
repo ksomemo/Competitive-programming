@@ -11,23 +11,20 @@ def f(N, A):
     −5000 ≤ Ai ≤ 5000 (1≤ i≤ N)
 
     第一印象: 累積和?
+    →不要,合計のみ必要だった
     """
     costs = [abs(A[0])]
-    costs_cumsum = [abs(A[0])]
     for i in range(1, N):
         cost = abs(A[i] - A[i-1])
-        cumsum = cost + costs_cumsum[-1]
-
         costs.append(cost)
-        costs_cumsum.append(cumsum)
 
     # 0へ戻る
     cost_N_to_start = abs(A[-1])
     costs.append(cost_N_to_start)
-    costs_cumsum.append(cost_N_to_start + costs_cumsum[-1])
+    costs_cumsum = sum(costs)
 
     for i in range(N):
-        total = costs_cumsum[-1]
+        total = costs_cumsum
         # skip: i-1 to i and i to i+1
         total -= (costs[i] + costs[i+1])
 
