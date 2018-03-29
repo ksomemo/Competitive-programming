@@ -383,15 +383,6 @@ def warshall_floyd():
     pass
 
 
-def cumulative_sum_method():
-    """累積和法
-
-    TODO 他に良い名前があればつけたい
-    imos法も調べる
-    """
-    pass
-
-
 def imos_1_0():
     """https://imoz.jp/algorithms/imos_method.html
     """
@@ -517,8 +508,39 @@ def two_pointers():
 
     のことらしい。英語記事で見るらしい。
     https://twitter.com/satanic0258/status/839652558058635264
+
+    例題 
+    https://paiza.hatenablog.com/entry/2015/01/21/%E3%80%90%E7%B4%AF%E7%A9%8D%E5%92%8C%E3%80%81%E3%81%97%E3%82%83%E3%81%8F%E3%81%A8%E3%82%8A%E6%B3%95%E3%80%91%E5%88%9D%E7%B4%9A%E8%80%85%E3%81%A7%E3%82%82%E8%A7%A3%E3%82%8B%E3%82%A2%E3%83%AB%E3%82%B4
     """
-    pass
+    xs = [4, 5, 1, 10, 3, 4, 1]
+
+    print(f_cumsum(xs))
+    print(f_shakutori(xs))
+
+
+def f_cumsum(xs):
+    ys = [0]
+
+    for i in range(len(xs)):
+        s = xs[i] + ys[i]
+        ys.append(s)
+
+    ans = -float("inf")
+    for i in range(len(ys) - 3):
+        tmp = ys[i+3] - ys[i]
+        ans = max(ans, tmp)
+
+    return ans
+
+
+def f_shakutori(xs):
+    s = sum(xs[:3])
+    ans = s
+    for i in range(len(xs) - 3):
+        s += xs[i+3] - xs[i]
+        ans = max(ans, s)
+
+    return ans
 
 
 def prim():
