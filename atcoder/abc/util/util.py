@@ -130,7 +130,10 @@ def rot_right_list(a, n, use_dq=False):
 def eratosthenes(N):
     """エラトステネスの篩
 
-    TODO: もっと速い方法
+    TODO: もっと速い方法(下記と基本同じなので問題なさそう)
+    競プロの強い人のPython実装
+        https://ideone.com/ZNfMXw
+        https://twitter.com/not_522/status/979330568960712705
     """
     is_prime = [True for _ in range(N + 1)]
     is_prime[0] = False
@@ -251,6 +254,21 @@ def idx_range(x, n, interval, start):
     3: 45 - 60  | 40 - 55
     """
     return (x + (interval - start)) // interval % n
+
+
+def run_perm(N, n_types):
+    """
+    全列挙
+    """
+    a = [0] * N
+    def perm(i, n):
+        if i == n:
+            print(a)
+            return
+        for t in range(n_types):
+            a[i] = t
+            perm(i+1, n)
+    perm(0, N)
 
 
 def my_divmod(x, y):
