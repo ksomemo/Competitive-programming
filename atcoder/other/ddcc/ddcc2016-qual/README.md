@@ -1,0 +1,2 @@
+# DISCO presents ディスカバリーチャンネル コードコンテスト2016 予選
+<https://beta.atcoder.jp/contests/ddcc2016-qual>
