@@ -31,7 +31,17 @@ def main():
     N,K  = map(int,input().split())
     *A,  = map(int,input().split())
 
+    editorial(N, K, A)
+
+def editorial(N, K, A):
+    t = 0
+    for a in A:
+        grundy_num = a % (K + 1)
+        t ^= grundy_num
+
     ans = "YES"
+    if t == 0:
+        ans = "NO"
     print(ans)
 
 if __name__ == '__main__':
