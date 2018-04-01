@@ -21,7 +21,23 @@ def main():
         print(ans)
         return
 
-    WA(S, az, za)
+    editorial(S)
+
+def editorial(S):
+    for i in range(1, 26)[::-1]:
+        if S[i-1] > S[i]:
+            continue
+
+        # 逆sort済みの途中で辞書順になった
+        # 逆sortの中で辞書順小さいもので置き換えて、辞書順最小にする
+        suffix = S[i:]
+        p_1 = S[i-1]
+        for q in sorted(suffix):
+            if q > p_1:
+                ans = S[:i-1] + q
+                print(ans)
+                return
+    print(-1)
 
 def WA(S, az, za):
     # 全文字使ってsort済み
