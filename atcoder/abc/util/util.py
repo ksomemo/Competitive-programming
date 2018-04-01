@@ -256,11 +256,20 @@ def idx_range(x, n, interval, start):
     return (x + (interval - start)) // interval % n
 
 
+def note_trigonometric_func():
+    """
+    三角関数と逆三角関数
+    """
+    pi_div_2 = math.asin(1)
+    near_1 = math.sin(pi_div_2)
+
+
 def run_perm(N, n_types):
     """
     全列挙
     """
     a = [0] * N
+
     def perm(i, n):
         if i == n:
             print(a)
