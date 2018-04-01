@@ -280,6 +280,31 @@ def run_perm(N, n_types):
     perm(0, N)
 
 
+def _factorial(n):
+    if n < 0:
+        raise ValueError("factorial() not defined for negative values")
+    a = 1
+    for i in range(1, n + 1):
+        a *= i
+    return a
+
+
+def npr(n, r):
+    if n < r:
+        return 0
+    a = 1
+    for i in range(r):
+        a *= n - i
+    return a
+
+
+def ncr(n, r):
+    _npr = npr(n, r)
+    if _npr == 0:
+        return 0
+    return _npr // _factorial(r)
+
+
 def my_divmod(x, y):
     a = x // y
     b = x - a * y
