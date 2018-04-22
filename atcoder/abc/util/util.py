@@ -8,6 +8,7 @@ syntax check by py_compile module
 # => http://n-knuu.hatenablog.jp/entry/2015/05/30/183718
 # heapq: priority queue
 # dequeu: fast queue
+import sys
 import math
 import heapq
 
@@ -309,6 +310,13 @@ def my_divmod(x, y):
     a = x // y
     b = x - a * y
     return (a, b)
+
+
+def bitesize(x):
+    """
+    "a": 50
+    "ab": 51
+    return sys.getsizeof(x)
 
 
 # char <-> int
