@@ -1,3 +1,6 @@
+from collections import Counter
+
+
 def main():
     """
     Aの空でない連続する部分列であって、
@@ -13,7 +16,31 @@ def main():
     N = int(input())
     *A, = map(int, input().split())
 
-    f2(N, A)
+    # f2(N, A)
+    editorial(N, A)
+
+
+def editorial(N, A):
+    """
+    部分列の和が0: 累積和の両端が同じ数であること
+    """
+    s = [0]
+    for i in range(N):
+        s.append(A[i] + s[-1])
+
+    def ncr(n, r):
+        if n < r:
+            return 0
+        from math import factorial as f
+        # rまでの並べ方について,組合せなので1/r
+        return f(n) // f(n - r) // f(r)
+
+    c = Counter(s)
+    ans = 0
+    for v in c.values():
+        ans += ncr(v, 2)
+
+    print(ans)
 
 
 def f1(N, A):
@@ -64,7 +91,6 @@ def f2(N, A):
     for i in range(1, N):
         s[i] = s[i-1] + A[i]
 
-    from collections import Counter
     c = Counter(s)
     ans = c[0]
     for i in range(1, N):

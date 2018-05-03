@@ -306,6 +306,14 @@ def ncr(n, r):
     return _npr // _factorial(r)
 
 
+def ncr2(n, r):
+    if n < r:
+        return 0
+    f = factorial
+    # rまでの並べ方について,組合せなので1/r
+    return f(n) // f(n - r) // f(r)
+
+
 def my_divmod(x, y):
     a = x // y
     b = x - a * y
