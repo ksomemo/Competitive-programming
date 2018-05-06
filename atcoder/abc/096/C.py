@@ -15,7 +15,7 @@ def main():
     f(H, W, s)
 
 
-def WA(H, W, s):
+def f(H, W, s):
     d = list(zip(
         (0, 0, 1, -1),
         (1, -1, 0, 0)
@@ -23,7 +23,8 @@ def WA(H, W, s):
     for h in range(H):
         for w in range(W):
             if s[h][w] == ".":
-                break
+                # なぜかbreakをcontinueだと思いこんでたので修正…
+                continue
 
             ok = False
             for dy, dx in d:

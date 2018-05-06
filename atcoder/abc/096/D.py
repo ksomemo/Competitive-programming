@@ -6,7 +6,7 @@ def main():
     sum(ai...ai5) is not prime
     """
     N = int(input())
-    # f(N)
+    f(N)
 
 
 def f(N):
@@ -18,6 +18,10 @@ def f(N):
             ps.append(i)
     # print(len(ps)): 5637
     # TLE(N, e, ps)
+
+    # (5n+1)*5 = 合成数
+    ps2 = [p for p in ps if p % 5 == 1]
+    print(*ps2[:N])
 
 
 def TLE(N, e, ps):
