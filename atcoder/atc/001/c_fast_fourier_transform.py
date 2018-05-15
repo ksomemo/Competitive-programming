@@ -1,23 +1,12 @@
-def input_str():
-	return input().strip('\n')
-
-def input_int():
-	return int(input_str())
-
-def input_str_l(sep=None):
-	return input_str().split(sep)
-
-def input_int_l(sep=None):
-	return map(int, input_str_l(sep))
-
-N = input_int()
+N = int(input())
 mains = []
 subs = []
-for m, s in [input_int_l() for _ in range(N)]:
-	mains.append(m)
-	subs.append(s)
+for m, s in [map(int, input().split()) for _ in range(N)]:
+    mains.append(m)
+    subs.append(s)
 
 import math
+
 
 def multiply(g, h):
     for i in range(len(g)):
@@ -25,11 +14,13 @@ def multiply(g, h):
             f[i+j] += g[i] * h[j]
     return f
 
+
 def pow_2_at_least(n):
     p = 1
     while p < n:
         p = p * 2
     return p
+
 
 def dft(f, n, inv=False):
     if n == 1:
@@ -53,8 +44,10 @@ def dft(f, n, inv=False):
         pow_zeta *= zeta
     return f
 
+
 def padding_zero(xs, n):
-    return xs + [0] * (n -len(xs))
+    return xs + [0] * (n - len(xs))
+
 
 def multiply2(g, h):
     # 係数の数を求めて足りない係数を補完する
@@ -73,6 +66,7 @@ def multiply2(g, h):
 #N = 4
 #mains = [1,2,3,4]
 #subs = [1,2,4,8]
+
 
 result = multiply2(mains, subs)
 print(0)

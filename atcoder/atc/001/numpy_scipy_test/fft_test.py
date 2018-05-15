@@ -1,17 +1,21 @@
 import cmath
 import numpy as np
 
+
 def pow_2_at_least(n):
     p = 1
     while p < n:
         p = p * 2
     return p
 
+
 def padding_zero(xs, n):
-    return xs + [0] * (n -len(xs))
+    return xs + [0] * (n - len(xs))
+
 
 def omega(p, q):
     return cmath.exp((2.0 * cmath.pi * 1j * q) / p)
+
 
 def fft(signal):
     n = len(signal)
@@ -27,9 +31,11 @@ def fft(signal):
 
     return combined
 
+
 def ifft(signal):
     timeSignal = fft([x.conjugate() for x in signal])
     return [x.conjugate()/len(signal) for x in timeSignal]
+
 
 def multiply2(g, h):
     # 係数の数を求めて足りない係数を補完する
@@ -45,6 +51,7 @@ def multiply2(g, h):
     # DFTの数の逆数をNで割る
     return ifft(ff)
 
+
 N = 10000
 mains = list(range(1, N))
 subs = list(range(1, N*2, 2))
@@ -53,4 +60,3 @@ result = multiply2(mains, subs)
 print(0)
 for c in result[0:2*N-1]:
     print(int(round(c.real)))
-
