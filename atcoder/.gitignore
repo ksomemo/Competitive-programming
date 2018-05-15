@@ -1,1 +1,4 @@
 .vscode
+
+# for arc <-> abc
+abc2arc_arc2abc.js
