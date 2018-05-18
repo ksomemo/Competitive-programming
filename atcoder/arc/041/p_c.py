@@ -9,7 +9,7 @@ def count_jump(right_list, left_list, L):
     else:
         # 各向きのグループの間隔を詰める
         for i, p in enumerate(right_list):
-            jump_count += right_list[-1] -p - i
+            jump_count += right_list[-1] - p - i
         for i, p in enumerate(left_list):
             jump_count += p - left_list[0] - i
 
@@ -19,6 +19,7 @@ def count_jump(right_list, left_list, L):
         jump_count += head_diff * max_cnt
 
     return jump_count
+
 
 def solve(rabbits, L):
     # 最初は右向き
@@ -47,24 +48,12 @@ def solve(rabbits, L):
 
     return jump_count
 
-# util
-def input_str():
-    return input().strip('\n')
-
-def input_int():
-    return int(input_str())
-
-def input_str_l(sep=None):
-    return input_str().split(sep)
-
-def input_int_l(sep=None):
-    return list(map(int, input_str_l(sep)))
 
 if __name__ == '__main__':
-    N, L = input_int_l()
+    N, L = map(int, input().split())
     rabbits = []
     for _ in range(N):
-        pos, direction = input_str_l()
+        pos, direction = input().split()
         rabbits.append((int(pos), direction))
     result = solve(rabbits, L)
     print(result)

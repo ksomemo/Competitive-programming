@@ -1,18 +1,22 @@
 def solve(N, M, edges):
+    """
+    TODO: implement
+    """
     colors = ['r', 'b']
-
-    graph()
 
     start = ""
     return 'Yes'
+
 
 class Edge():
     def __init__(self, idx, to, c):
         self.idx = idx
         self.to = to
         self.is_red = c == 'r'
+
     def __repr__(self):
         return "<%s: %s>" % (self.__class__, self.__dict__)
+
 
 def check(idx, red):
     color = [0 for _ in range(N)]
@@ -24,6 +28,7 @@ def check(idx, red):
         if not used[i]:
             return False
     return True
+
 
 def dfs(idx, is_red):
     if color[idx] != 0:
@@ -42,27 +47,14 @@ def dfs(idx, is_red):
     return False
 
 
-# util
-def input_str():
-    return input().strip('\n')
-
-def input_int():
-    return int(input_str())
-
-def input_str_l(sep=None):
-    return input_str().split(sep)
-
-def input_int_l(sep=None):
-    return list(map(int, input_str_l(sep)))
-
 if __name__ == '__main__':
     # 頂点, 辺
-    N, M = input_int_l()
+    N, M = map(int, input().split())
     color = [0 for _ in range(N)]
     used = [False for _ in range(M)]
     node = [[] for _ in range(N)]
     for i in range(M):
-        a, b, color = input_str_l()
+        a, b, color = input().split()
         a, b = int(a) - 1, int(b) - 1
         # 双方向行き来できるので、２つ
         node[a].append(Edge(i, b, color))
