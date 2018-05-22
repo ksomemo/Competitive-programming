@@ -325,6 +325,7 @@ def bitesize(x):
     "a": 50
     "ab": 51
     return sys.getsizeof(x)
+    """
 
 
 # char <-> int

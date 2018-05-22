@@ -380,7 +380,32 @@ def warshall_floyd():
     V^3の理由は、a[i][j] と経由 a[i][k] + a[k][j] の比較による経路を求めるため
     ABCでも実際使ったことがある
     """
-    pass
+    N = 3
+    route = [
+        (0, 1, 9),
+        (0, 2, 3),
+        (1, 2, 4),
+    ]
+    costs = [[0] * N for _ in range(N)]
+    for i, j, cost in route:
+        costs[i][j] = cost
+        costs[j][i] = cost
+
+    for c in costs:
+        print(c) 
+    
+    for k in range(N):
+        for i in range(N):
+            for j in range(N):
+                direct_cost = costs[i][j]
+                via_k_cost = costs[i][k] + costs[k][j]
+                if direct_cost > via_k_cost:
+                    costs[i][j] = via_k_cost
+    
+    for c in costs:
+        print(c) 
+
+
 
 
 def imos_1_0():
