@@ -281,6 +281,24 @@ def run_perm(N, n_types):
     perm(0, N)
 
 
+def my_permutations(iterable, r=None):
+    """
+    https://docs.python.jp/3.6/library/itertools.html#itertools.permutations
+    http://blog.shibayu36.org/entry/2016/12/21/081625
+    http://jutememo.blogspot.jp/2008/09/python_29.html
+    http://code.activestate.com/recipes/190465/
+    """
+    pass
+
+
+def my_product(*iterables, repeat=1):
+    pass
+
+
+def my_combinations(iterable, r):
+    pass
+
+
 def _factorial(n):
     if n < 0:
         raise ValueError("factorial() not defined for negative values")
