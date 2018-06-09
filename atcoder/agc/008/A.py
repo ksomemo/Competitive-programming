@@ -1,8 +1,36 @@
 def main():
     x, y = map(int, input().split())
 
-    ans = f(x, y)
+    # ans = f(x, y)
+    ans = editorial(x, y)
     print(ans)
+
+
+def editorial(x, y):
+    """
+    |b12| x  y|
+    |---|-----|
+    | 00| x  y|
+    | 01| x -y|
+    | 10|-x  y|
+    | 11|-x -y|
+    |---|-----|
+    """
+    xya = [
+        (x, y, 0),
+        (x, -y, 1),
+        (-x, y, 1),
+        (-x, -y, 2),
+    ]
+
+    answers = []
+    for x, y, a in xya:
+        ans = float("inf")
+        if x <= y:
+            ans = y - x + a
+        answers.append(ans)
+
+    return min(answers)
 
 
 def f(x, y):
