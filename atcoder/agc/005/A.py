@@ -1,8 +1,32 @@
 def main():
     X = input()
 
-    ans = part(X)
+    #ans = part(X)
+    ans = editorial(X)
     print(ans)
+
+
+def test_ans():
+    X_ans = [
+        ("TSTTSS", 4),
+        ("SSTTST", 0),
+        ("TSSTTTSS", 4),
+    ]
+    for X, ans in X_ans:
+        assert part(X) == editorial(X) == ans
+
+
+def editorial(X):
+    stack = [X[0]]
+    ans = len(X)
+    for c in X[1:]:
+        if stack and stack[-1] == "S" and c == "T":
+            ans -= 2
+            stack.pop()
+        else:
+            stack.append(c)
+
+    return ans
 
 
 def part(X):
