@@ -10,8 +10,65 @@ def main():
         for _ in range(N)
     ]
 
-    ans = f(N, M, xyz)
+    ans = editorial(N, M, xyz)
     print(ans)
+
+
+def editorial(N, M, xyz):
+    """
+    1: max  sum(x)  +  sum(y)  +  sum(z)  (解説用)
+    2: max |sum(x)| + |sum(y)| + |sum(z)| (本題)
+
+    1 の場合:
+        各ケーキについてスコアを算出し
+        スコアが大きいM個を選ぶだけ
+
+    2 の場合:
+        |x| = max(x, -x)
+
+          max(|x|, |y|)
+        = max(max(x, -x), max(y, -y))
+        = max(max(x, y), max(-x, -y))
+
+        3要素について、「正の方向に最大化する」 「負の方向に最大化する」 のどちらを選ぶか、
+        ということを考えると分かりやすいです。
+        要素は 3 つあるので、2^3 = 8通り全探索します。
+
+        1要素なら分かる
+            なにもせずそのままで足す
+            符号を反転してからで足す
+                ※M個でなく、すべて足すなら反転してもしなくても同じ
+        2要素以上
+            1の場合(1要素ではなく)を想定しないと場合分けの想定できない
+            それぞれの最大化の組合せ
+
+    youtubeのコメントで同じく思ったこと
+        1.
+            符号を反転してしまって、
+            関係ない値が出てきそうに感じちゃうんですけど、
+            どうして出ないんでしょうか。
+        2.
+            元のケーキの符号はそれぞれ決まっていて
+            それを足し合わせて符号を決めるのと同義である理由が知りたいです。
+
+    https://twitter.com/_TTJR_/status/1007982375546994688
+    """
+    max_scores = []
+    for i in range(8):
+        sign_x = 1 if (1 << 2) & i else -1
+        sign_y = 1 if (1 << 1) & i else -1
+        sign_z = 1 if (1 << 0) & i else -1
+
+        scores = []
+        for x, y, z in xyz:
+            s = sum([x * sign_x, y * sign_y, z * sign_z])
+            scores.append(s)
+
+        max_s = sum(sorted(scores, reverse=True)[:M])
+        max_scores.append(max_s)
+
+    ans = max(max_scores)
+    return ans
 
 
 def f(N, M, xyz):
@@ -66,6 +123,9 @@ def f(N, M, xyz):
 def f2(N, M, xyz):
     """
     N種類の中からM個食べるか食べないかを選択したときの値
+
+    https://twitter.com/eiya5498513/status/1007993044711297024
+    ただDPするだけでは評価基準がないので無理
     """
     dp = [
         [-float("inf")] * (M+1)
