@@ -25,6 +25,23 @@ def S(N):
     return ans
 
 
+def is_snuke(m, n):
+    return n * S(m) <= m * S(n)
+
+
+def ex_WA(K):
+    base = 1
+    answers = [1]
+    x = 1
+    while answers[-1] < K:
+        if len(str(x)) != len(str(x + base)):
+            base *= 10
+        x += base
+        answers.append(x)
+
+    return answers[:K]
+
+
 def editorial(K):
     answers = []
 

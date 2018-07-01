@@ -11,7 +11,8 @@ def main():
     N, K = map(int, input().split())
     *A, = map(int, input().split())
 
-    ans = f(N, K, A)
+    ans = f_K(N, K, A)
+    #ans = editorial(N, K, A)
     print(ans)
 
 
@@ -23,7 +24,8 @@ def test_examples():
     ]
 
     for N, K, A, ans in nka_ans:
-        assert f(N, K, A) == ans
+        assert editorial(N, K, A) == ans
+        assert f_K(N, K, A) == ans
 
 
 def test_ans():
@@ -35,10 +37,44 @@ def test_ans():
     ]
 
     for N, K, A, ans in nka_ans:
-        assert f(N, K, A) == ans
+        assert editorial(N, K, A) == ans
+        assert f_K(N, K, A) == ans
 
 
-def f(N, K, A):
+def f_K(N, K, A):
+    """
+    最初に置く範囲は、 1_idx - K + 1 から 1_idx
+    """
+    idx = [i for i, a in enumerate(A) if a == 1][0]
+    left_idx = max(0, idx - K)
+    ans = float("inf")
+    for i in range(left_idx, idx + 1):
+        left = i
+        right = max(0, N - left - K)
+        tmp = (left + (K - 1) - 1) // (K - 1)
+        tmp += 1
+        tmp += (right + (K - 1) - 1) // (K - 1)
+        ans = min(ans, tmp)
+
+    return ans
+
+
+def editorial(N, K, A):
+    """
+    端から端までカバーしていく
+        K + (K - 1) * N (N >= 0)
+        これは仮に１番左に1があったとき
+    結果的には順番は気にしなくて良い
+    上記でカバーしていくと、いつかは最初の1をカバーする
+        カバーした順番を1をカバーしたことを最初に行えば変わらない
+
+    TODO: editorial pdfの意味
+        1 + g(K − 1) ≤ p ≤ 1 + (g + 1)(K − 1) なる整数 g
+    """
+    return ((N-1) + (K-1) - 1) // (K-1)
+
+
+def WA(N, K, A):
     """
     数列のうち，連続した K個の要素を選ぶ
     その後，選んだ要素それぞれの値を，選んだ要素の中の最小値で置き換える．
