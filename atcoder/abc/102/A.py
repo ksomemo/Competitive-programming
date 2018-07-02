@@ -1,0 +1,13 @@
+def main():
+    N = int(input())
+
+    if N % 2 == 0:
+        ans = N
+    else:
+        ans = N * 2
+
+    print(ans)
+
+
+if __name__ == '__main__':
+    main()
