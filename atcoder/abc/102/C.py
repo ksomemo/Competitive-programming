@@ -6,8 +6,24 @@ def main():
     N = int(input())
     *A, = map(int, input().split())
 
-    ans = WA3(N, A)
+    #ans = WA3(N, A)
+    ans = editorial(N, A)
     print(ans)
+
+
+def editorial(N, A):
+    ans = 0
+    C = sorted(a - i for i, a in enumerate(A, 1))
+    if N % 2 == 1:
+        b = C[N // 2]
+    else:
+        # 中央値だけど、整数？(=> 切り上げ下げどちらでもよい)
+        s = C[N // 2 - 1] + C[N // 2 - 1]
+        b = s // 2
+        b = (s + 1) // 2
+
+    ans = sum(abs(c - b) for c in C)
+    return ans
 
 
 def WA3(N, A):
