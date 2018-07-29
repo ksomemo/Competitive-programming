@@ -12,7 +12,7 @@ def main():
     N = int(input())
     *A, = map(int, input().split())
 
-    ans = f(N, A)
+    ans = editorial(N, A)
     print(ans)
 
 
@@ -43,6 +43,14 @@ def f(N, A):
     ans = sum(m % a for a in A)
 
     return ans
+
+
+def editorial(N, A):
+    """
+    lcm を求めなくても、ai - 1 であることはわかるので
+    lcm を計算しなくてよい
+    """
+    return sum(a - 1 for a in A)
 
 
 def WA(N, A):

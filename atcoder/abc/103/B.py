@@ -9,6 +9,13 @@ def main():
         print("No")
 
 
+def twi(S, T):
+    """
+    https://twitter.com/algon_320/status/1020670460441214976
+    """
+    return T in (S + S)
+
+
 def f(S, T):
     for i in range(len(S)):
         t = S[-i:] + S[:-i]
