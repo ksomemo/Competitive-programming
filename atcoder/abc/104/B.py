@@ -2,6 +2,8 @@ def main():
     S = input()
 
     ans = f(S)
+    ans = regex(S)
+
     print(ans)
 
 
@@ -19,6 +21,16 @@ def f(S):
             return "WA"
 
     return "AC"
+
+
+def regex(S):
+    import re
+
+    r = re.compile("^A[a-z][^C]*C[^C]*[a-z]$")
+    if r.match(S):
+        return "AC"
+    else:
+        return "WA"
 
 
 if __name__ == '__main__':

@@ -15,8 +15,90 @@ def main():
         for _ in range(D)
     ))
 
-    ans = f(D, G, P, C)
+    # ans = f(D, G, P, C)
+    ans = editorial(D, G, P, C)
     print(ans)
+
+
+def editorial(D, G, P, C):
+    """
+    bit全探索
+        を使う問題
+            https://beta.atcoder.jp/contests/abc080/tasks/abc080_c
+
+        https://twitter.com/furuya1223/status/1026100709060562950
+        https://twitter.com/furuya1223/status/1026101338675982336
+            コンプする点数を決め打ちで2^D全探索(bitで)。
+            必ず「0種以上コンプ+未コンプ中最高点のものを0~”その点の問題数-1”問」
+            という形になる
+
+            Cは、コンプする場合とそうでない場合で価値が入れ替わりうるので、
+            「コンプするものたち」と「コンプしないものたち」で分けて考えたくなった。
+            「コンプするもの」は、するかしないかの2値なので、D<=10ということもあり、
+            決め打ち全探索ができる
+        https://twitter.com/TangentDay/status/1026100759295811584
+            C：コンプする集合決め打ちして残りは貪欲
+
+    典型
+        https://twitter.com/drken1215/status/1026114800978296832
+            今回の C 問題は「bit 全探索」ばかりに目が行きがちだけど、
+            それと同じくらい「ある量を決め打つと、残りの最適戦略は Greedy に決まる」
+            という超典型の考え方も重要かなと思うん。その意味では
+
+            ABC 085 D - Katana Thrower
+            https://beta.atcoder.jp/contests/abc085/tasks/abc085_d
+
+    https://twitter.com/evima0/status/1026100718535499782
+        C: 2つの点数を中途半端に埋めても無意味なので1つ除きAll or Nothing (難しめ)
+
+    DP/ナップザック
+        https://twitter.com/_TTJR_/status/1026100838681329665
+            C: 100 で割ると現実的な時間で DP できるので嬉しいです
+        https://twitter.com/kzyKT_M/status/1026101633283813376
+            C dp[解いた問題数]=得点
+        https://beta.atcoder.jp/contests/abc104/submissions/2958357
+        https://beta.atcoder.jp/contests/abc104/submissions/2953341
+    その他
+        https://twitter.com/satanic0258/status/1026103918353235968
+            Cも普通に全探索で,使う個数も降順に1個ずつループしたのでDPなし
+    """
+
+    ans = float("inf")
+    for i in range(2 ** D):
+        c = 0
+        score = 0
+        clear = [False] * D
+        for j in range(D):
+            if i & (1 << j):
+                c += P[j]
+                score += 100 * (j + 1) * P[j] + C[j]
+                clear[j] = True
+
+        # print(i, clear, c, score)
+        for j in range(D)[::-1]:
+            if score >= G:
+                break
+            if clear[j]:
+                continue
+
+            rest = G - score
+            base_score = 100 * (j + 1)
+            add_c = (rest + base_score - 1) // base_score
+            add_c = min(add_c, P[j] - 1)
+            c += add_c
+            score += base_score * add_c
+
+            # print("\t", base_score, c, score)
+
+        if score >= G:
+            ans = min(ans, c)
+
+    return ans
+
+
+def func_dp(D, G, P, C):
+    ans = float("inf")
+    return ans
 
 
 def f(D, G, P, C):
