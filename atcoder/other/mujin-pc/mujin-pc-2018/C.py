@@ -2,13 +2,16 @@ def main():
     N, M = map(int, input().split())
     S = [input() for _ in range(N)]
 
-    # ans = f(N, M, S)
-    ans = TLE(N, M, S)
+    ans = f(N, M, S)
+    # ans = TLE(N, M, S)
     print(ans)
 
 
 def f(N, M, S):
     """
+    PyPy3: AC
+    Python3: TLE
+
     順序対とは？
         ((start_n,start_m), (end_n, end_m))
 
@@ -31,8 +34,56 @@ def f(N, M, S):
 
     順序対より、入れ替えたものもあり得る=>右に曲がれれば
     あり得る順序対を伸ばせば達成できるかが分かる
+
+    https://twitter.com/tempura_pp/status/1025823689906970624
+        横方向にどれだけのばせるか
+        ただし実装は楽にならない
+    https://twitter.com/0214sh7/status/1025743708472324096
+        ABC-018-C
+
+    https://twitter.com/eiya5498513/status/1025744300561166337
+
+    https://twitter.com/homesentinel214/status/1025744109389004800
+    https://twitter.com/ferin_tech15/status/1025743196591030277
+        掛け算して足す、累積和
+        曲がる一を全探索
+    https://twitter.com/satanic0258/status/1025755556823220224
+        連結成分サイズを持てるUnionFind
+    https://docs.google.com/document/d/11kar9MsNBbXwhfNsZdbJ17m18N8C9fdp9zE_oeZqTgU/edit
+
     """
     ans = 0
+
+    import copy
+    right = [[0] * M for _ in range(N)]
+    left = copy.deepcopy(right)
+    up = copy.deepcopy(right)
+    down = copy.deepcopy(right)
+
+    for y in range(N):
+        for x in range(1, M):
+            if S[y][x] == "." and S[y][x-1] == ".":
+                right[y][x] += right[y][x-1] + 1
+
+            lx = M - x - 1
+            if S[y][lx] == "." and S[y][lx+1] == ".":
+                left[y][lx] += left[y][lx+1] + 1
+
+    for y in range(1, N):
+        for x in range(M):
+            if S[y][x] == "." and S[y-1][x] == ".":
+                down[y][x] += down[y-1][x] + 1
+
+            uy = N - y - 1
+            if S[uy][x] == "." and S[uy+1][x] == ".":
+                up[uy][x] += up[uy+1][x] + 1
+
+    for y in range(N):
+        for x in range(M):
+            # (r * d) + (l * u) + (d * l) + (u * r)
+            # r * (d + u) + l * (u + d)
+            # (r + l) * (d + u)
+            ans += (right[y][x] + left[y][x]) * (down[y][x] + up[y][x])
 
     return ans
 
