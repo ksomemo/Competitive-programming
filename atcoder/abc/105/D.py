@@ -11,7 +11,8 @@ def main():
     N, M = map(int, input().split())
     *A, = map(int, input().split())
 
-    ans = f(N, M, A)
+    # ans = f(N, M, A)
+    ans = editorial(N, M, A)
     print(ans)
 
 
@@ -26,6 +27,41 @@ def f(N, M, A):
         b[i] = b[i-1] + A[i]
 
     ans = TLE(N, M, A, b)
+    return ans
+
+
+def editorial(N, M, A):
+    """
+    """
+    b = [0] * (N + 1)
+    for i in range(N):
+        b[i+1] = b[i] + A[i]
+    c = [x % M for x in b]
+
+    return binomial_coefficients(c)
+    # return loop(c)
+
+
+def binomial_coefficients(c):
+    from collections import Counter
+
+    ans = 0
+    for i, n in Counter(c).items():
+        ans += n * (n - 1) // 2
+
+    return ans
+
+
+def loop(c):
+    ans = 0
+    m = {}
+    for x in c:
+        if not x in m:
+            m[x] = 0
+        else:
+            ans += m[x]
+        m[x] += 1
+
     return ans
 
 
