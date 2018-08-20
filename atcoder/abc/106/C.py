@@ -14,8 +14,16 @@ def main():
 
 
 def f(S, K):
-    return NG(S, K)
-    ans = ""
+    """
+    10^18 <<<<<<<<<<<< 2^(5 * 10^15)
+    """
+    ans = "1"
+    for i, c in enumerate(S, 1):
+        if c != "1":
+            return c
+        elif i == K:
+            return "1"
+
     return ans
 
 

@@ -12,17 +12,67 @@ def main():
     ))
 
     # answers = f(N, M, Q, L, R, p, q)
-    experiment(N, M, Q, L, R, p, q)
-    answers = TLE(N, M, Q, L, R, p, q)
+    # experiment(N, M, Q, L, R, p, q)
+    # answers = TLE(N, M, Q, L, R, p, q)
+    answers = editorial_2(N, M, Q, L, R, p, q)
     for ans in answers:
         print(ans)
 
-    return
-    print(N, M, Q)
-    print(L)
-    print(R)
-    print(p)
-    print(q)
+
+def editorial_2(N, M, Q, L, R, p, q):
+    """
+    ２次元累積和のライブラリを持っておくとよいらしい
+        確かに実装ミスりそう
+    """
+    t = [[0] * (N+1) for _ in range(N+1)]
+    for l, r in zip(L, R):
+        t[l][r] += 1
+
+    # 二次元累積和
+    # 積分画像と同じ
+    for l in range(1, N+1):
+        for r in range(1, N+1):
+            t[l][r] += t[l][r-1]
+    for l in range(1, N+1):
+        for r in range(1, N+1):
+            t[l][r] += t[l-1][r]
+
+    answers = []
+    for l, r in zip(p, q):
+        # https://twitter.com/iwashi31/status/1030823356579250178
+        # memo[R][R] - memo[L-1][R] で十分な理由は、L <= R だから
+        ans = 0
+        ans += t[r][r]
+        ans -= t[l-1][r]
+        ans -= t[r][l-1]
+        ans += t[l-1][l-1]
+
+        answers.append(ans)
+
+    return answers
+
+
+def editorial_1(N, M, Q, L, R, p, q):
+    # Lごとの累積和
+    t1 = [[0] * (N+1) for _ in range(N+1)]
+    t2 = [[0] * (N+1) for _ in range(N+1)]
+    # LRの組合せ, N<=500より間に合う
+    for l, r in zip(L, R):
+        t1[l][r] += 1
+
+    for l in range(1, N+1):
+        for r in range(1, N+1):
+            t2[l][r] = t2[l][r-1] + t1[l][r]
+
+    answers = []
+    for _p, _q in zip(p, q):
+        ans = 0
+        for l in range(_p, _q+1):
+            ans += t2[l][_q] - t2[l][_p-1]
+
+        answers.append(ans)
+
+    return answers
 
 
 def f(N, M, Q, L, R, p, q):
@@ -73,11 +123,11 @@ def experiment(N, M, Q, L, R, p, q):
     print("\t", pair)
 
     print("\t",
-        [
-            abs(cumsum[l] - cumsum[r])
-            for _p, _q in zip(p, q)
-        ]
-    )
+          [
+              abs(cumsum[l] - cumsum[r])
+              for _p, _q in zip(p, q)
+          ]
+          )
 
 
 def TLE(N, M, Q, L, R, p, q):
