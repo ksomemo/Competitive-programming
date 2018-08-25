@@ -75,6 +75,11 @@ def editorial(D, G, P, C):
                 clear[j] = True
 
         # print(i, clear, c, score)
+        # 解説コード(https://beta.atcoder.jp/contests/abc104/submissions/2954675)
+        # で達成していないときに残り問題のループではなく、最高得点の問題のみで考えている理由
+        # 最高得点 * (問題数-1) までで達成していなければ
+        # 問題数すべて解いていないとNGであるので、
+        # それはボーナスを貰ったパターンでカバーできるため？
         for j in range(D)[::-1]:
             if score >= G:
                 break
