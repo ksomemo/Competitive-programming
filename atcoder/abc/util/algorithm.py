@@ -25,6 +25,47 @@ def heap_sort():
     pass
 
 
+def test_bucket_sort():
+    xs = [2, 2, 2, 4, 4, 4, 4, 1, 1, 0]
+    assert sorted(xs) == bucket_sort_uint(xs)
+
+    ys = xs + [-x for x in xs]
+    assert sorted(ys) == bucket_sort_int(ys)
+
+
+def bucket_sort_int(xs):
+    _min = min(xs)
+    _max = max(xs)
+    table = [0 for _ in range(_min, _max + 1)]
+    for x in xs:
+        table[x - _min] += 1
+
+    ys = []
+    for i in range(_min, _max + 1):
+        if table[i - _min] > 0:
+            ys.extend([i] * table[i - _min])
+
+    return ys
+
+
+def bucket_sort_uint(xs):
+    """
+    0 <= min
+    """
+    assert 0 <= min(xs)
+    m = max(xs)
+    table = [0] * (m + 1)
+    for x in xs:
+        table[x] += 1
+
+    ys = []
+    for i in range(m + 1):
+        if table[i] > 0:
+            ys.extend([i] * table[i])
+
+    return ys
+
+
 def _bisect_LR(a, x, right=True, verbose=False):
     """https://github.com/python/cpython/blob/3.6/Lib/bisect.py
 
@@ -64,6 +105,10 @@ def _bisect_LR(a, x, right=True, verbose=False):
                 hi = mid
 
     return low
+
+
+def ternary_search(xs, y):
+    pass
 
 
 def a_star():
@@ -392,8 +437,8 @@ def warshall_floyd():
         costs[j][i] = cost
 
     for c in costs:
-        print(c) 
-    
+        print(c)
+
     for k in range(N):
         for i in range(N):
             for j in range(N):
@@ -401,11 +446,9 @@ def warshall_floyd():
                 via_k_cost = costs[i][k] + costs[k][j]
                 if direct_cost > via_k_cost:
                     costs[i][j] = via_k_cost
-    
+
     for c in costs:
-        print(c) 
-
-
+        print(c)
 
 
 def imos_1_0():
