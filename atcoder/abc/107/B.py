@@ -3,9 +3,38 @@ def main():
     a = [input() for _ in range(H)]
 
     # ans = f(H, W, a)
-    ans = T(H, W, a)
+    # ans = T(H, W, a)
+    ans = editorial(H, W, a)
     for x in ans:
         print(*x, sep="")
+
+
+def editorial(H, W, a):
+    # 出力する部分の記憶
+    row = [False] * H
+    col = [False] * W
+
+    for i in range(H):
+        for j in range(W):
+            if a[i][j] == "#":
+                row[i] = True
+                col[j] = True
+
+    ans = []
+    for i in range(H):
+        if not row[i]:
+            continue
+
+        line = []
+        for j in range(W):
+            if col[j]:
+                line.append(a[i][j])
+        ans.append(line)
+
+    if not ans:
+        return [[]]
+
+    return ans
 
 
 def T(H, W, a):
