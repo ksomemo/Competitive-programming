@@ -9,11 +9,30 @@ def main():
         for _ in range(H)
     ]
 
-    ans = TLE(H, W, a)
+    # ans = TLE(H, W, a)
+    ans = editorial(H, W, a)
 
     print(len(ans))
     for y1, x1, x, y in ans:
         print(y1+1, x1+1, x+1, y+1)
+
+
+def editorial(H, W, a):
+    op = []
+    for i in range(H):
+        for j in range(W-1):
+            if a[i][j] % 2 == 1:
+                a[i][j] -= 1
+                a[i][j+1] -= 1
+                op.append((i, j, i, j+1))
+
+    for i in range(H-1):
+        if a[i][W-1] % 2 == 1:
+            a[i][W-1] -= 1
+            a[i+1][W-1] -= 1
+            op.append((i, W-1, i+1, W-1))
+
+    return op
 
 
 def f(H, W, a):
