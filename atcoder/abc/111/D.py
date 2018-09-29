@@ -1,6 +1,3 @@
-from collections import Counter
-
-
 def main():
     """
     ロボットアーム
@@ -50,9 +47,12 @@ def main():
 
     m, d, w = part_300(N, X, Y)
     # m, d, w = ex1(N, X, Y)
-    print(m)
-    print(*d)
-    print(*w, sep="\n")
+    if m == -1:
+        print(-1)
+    else:
+        print(m)
+        print(*d)
+        print(*w, sep="\n")
 
 
 def ex1(N, X, Y):
@@ -85,22 +85,22 @@ def part_300(N, X, Y):
         dist = abs(x) + abs(y)
         dists.append(dist)
 
+    m = -1
+    d = []
+    w = []
     mod = list(map(lambda x: x % 2, dists))
     if len(set(mod)) == 1:
         m = max(dists)
         d = [1] * m
-        w = []
         for x, y, dist in zip(X, Y, dists):
             x_dir = "R" if x > 0 else "L"
-            y_dir = "U" if y > 0 else "U"
+            y_dir = "U" if y > 0 else "D"
 
             _w = x_dir * abs(x) + y_dir * abs(y)
-            rest = dist - len(x)
+            rest = m - len(_w)
             if rest > 0:
                 _w += "LR" * (rest // 2)
             w.append(_w)
-    else:
-        pass
 
     return m, d, w
 
