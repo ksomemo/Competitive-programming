@@ -12,7 +12,9 @@ def main():
     """
     N, M = map(int, input().split())
 
-    ans = f(N, M)
+    # ans = f(N, M)
+    ans = editorial(N, M)
+    print(ans)
 
 
 def f(N, M):
@@ -60,7 +62,30 @@ def f(N, M):
 
 
 def editorial(N, M):
-    pass
+    """
+    すべての項がK倍なら、最大公約数は最低でもKであり、それらの和であるMもKの倍数
+    Mの約数は、M=A*B=B*A の対称性より
+        最大 root(10^9) まで試せば良いのでTLEしない
+    N=1,M=10^9のとき、最初の考えではTLEになる
+    """
+    ans = 1
+    a_max = int(M ** 0.5)
+    for a in range(1, a_max + 1):
+        if M % a != 0:
+            continue
+
+        # aで割り切れるので、もう片方も試す
+        b = M // a
+
+        # e.g. N=5, M=120, a=15, M = (N + x) * a,  xは正負ゼロどれか
+        # 15 + 15 + 15 + 15 + 15 = 15 * 5 = 75, rest=45 = 15 * 3
+        # a * N はaの倍数、Mもaの倍数、より残りもaの倍数なのでどれかの項に配ればよい
+        if a * N <= M:
+            ans = max(ans, a)
+        if b * N <= M:
+            ans = max(ans, b)
+
+    return ans
 
 
 if __name__ == '__main__':
