@@ -1,5 +1,8 @@
+from collections import Counter
+
+
 def main():
-    """
+    r"""
     数列 a1,a2,...,anが以下の条件を満たすとき、 /\/\/\/ と呼ぶ
 
         各 i=1,2...,n-2 について、ai=ai+2
@@ -16,8 +19,22 @@ def main():
     *v, = map(int, input().split())
 
     ans = f(n, v)
+    assert ans == simple(n, v)
     print(ans)
 
+
+def simple(n, v):
+    # most_commonを事前に使い短くする
+    # 1種類しかないならば存在しない種類を0個で足して条件分岐を潰す
+    c1 = Counter(v[::2]).most_common() + [(0, 0)]
+    c2 = Counter(v[1::2]).most_common() + [(0, 0)]
+
+    if c1[0][0] == c2[0][0]:
+        n_no_change = max(c1[0][1] + c2[1][1],
+                          c1[1][1] + c2[0][1])
+        return n - n_no_change
+    else:
+        return n - c1[0][1] - c2[0][1]
 
 def f(n, v):
     """
@@ -34,7 +51,6 @@ def f(n, v):
         else:
             v_idx_odd.append(x)
 
-    from collections import Counter
     ve = Counter(v_idx_even)
     vo = Counter(v_idx_odd)
 

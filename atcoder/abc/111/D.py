@@ -45,8 +45,9 @@ def main():
         for _ in range(N)
     ))
 
-    m, d, w = part_300(N, X, Y)
-    # m, d, w = ex1(N, X, Y)
+    # m, d, w = part_300(N, X, Y)
+    m, d, w = ref(N, X, Y)
+
     if m == -1:
         print(-1)
     else:
@@ -75,7 +76,7 @@ def part_300(N, X, Y):
         20 * 20
         この範囲においてm<=40で到達するためのd
     d=1のとき|X|+|Y|の偶奇
-        揃っている場合、mは最大に合わせる、余っているときはRLのように移動なしにできる    
+        揃っている場合、mは最大に合わせる、余っているときはRLのように移動なしにできる
         揃っていない場合, d=1では不可能？
         2と1およびLR,UDを駆使して-1を再現して偶奇を揃える?
             無理っぽい: 奇数しか作れない
@@ -106,7 +107,188 @@ def part_300(N, X, Y):
 
 
 def editorial(N, X, Y):
+    """
+    2冪の数の組合せにより、どの点にでも移動できるようになる
+        ※ただし、奇数のみ。偶数に対応させたいときは１での移動を追加する
+
+      1,   2,   4,   8,
+    2^0, 2^1, 2^2, 2^3, ...
+
+    {1} だけでの移動、原点からの1の距離。当たり前
+    x: 原点
+            b
+    -------cxa------
+            d
+
+    {1, 2} での移動、原点から1の距離から2移動できる
+    a-d を基準に考えると
+        a-d をa方向に2移動: a方向に菱形の移動範囲が増える
+        a-d をb方向に2移動: b
+        a-d をc方向に2移動: c
+        a-d をd方向に2移動: d
+            b
+           b b
+          c b a
+         c cxa a
+          c d a
+           d d
+            d
+
+    https://twitter.com/CuriousFairy315/status/1046073372315209728
+    https://twitter.com/schwarzahl/status/1046031849221316608
+    どうして(u, v)=(x+y, x-y)的な変換を施す必要があるのか？
+        https://twitter.com/ILoveTw1tter/status/1046062363831660544
+        http://drken1215.hatenablog.com/entry/2018/09/30/002900
+             x 座標, y 座標両方頑張ろうと思うと、60 個くらい欲しくなる。で、困っていた。
+
+         U
+         |
+    L----o----R
+         |
+         D
+
+    # TODO
+      U＼        ／R
+         ＼    ／
+           ＼／
+           ／ ＼
+         ／     ＼
+      L／         ＼D
+    """
     pass
+
+
+def ref(N, X, Y):
+    dists = []
+    for x, y in zip(X, Y):
+        dist = (abs(x) + abs(y)) % 2
+        dists.append(dist)
+
+    m = -1
+    d = []
+    w = []
+    mod = set(map(lambda x: x % 2, dists))
+    if len(mod) != 1:
+        return m, d, w
+
+    for i in range(30, 0-1, -1):
+        d.append(1 << i)
+    if 0 in mod:
+        d.append(1)
+    m = len(d)
+
+    w1 = transform_xy(N, X, Y, d)
+    # w2 = no_transform_xy(N, X, Y, d)
+    # assert w1 == w2
+
+    return m, d, w1
+
+
+def transform_xy(N, X, Y, d):
+    """
+    http://kagamiz.hatenablog.com/entry/2014/12/21/213931
+        菱形に増える範囲を45度回転することで正方形と捉えるようにする
+        大きい方を優先するのは変換なしと変わらない
+        解説につながりそう
+            TODO: こっちを解説にする必要があったのか？
+            Blogの菱形内包はこっちでないとめんどくさそう
+    """
+    # 変換: θ=45°, 分母は共通の√2 なので払ってしまうと下記の式になる
+    trans_x = []
+    trans_y = []
+    for x, y in zip(X, Y):
+        trans_x.append(x + y)
+        trans_y.append(x - y)
+
+    plot = False
+    if plot:
+        import matplotlib.pyplot as plt
+
+        plt.axhline(0, linestyle="--")
+        plt.axvline(0, linestyle="--")
+
+        # denominator: 分母
+        deno = 2 ** 0.5
+        plt.scatter(X, Y, label="src")
+        plt.scatter([x / deno for x in trans_x],
+                    [y / deno for y in trans_y],
+                    label="trans")
+
+        for x, y, x_src, y_src in zip(trans_x, trans_y, X, Y):
+            plt.text(x_src, y_src, str((x_src, y_src)))
+            plt.text(x / deno, y / deno, str((x_src, y_src)))
+
+        plt.legend()
+        plt.show()
+
+    # print(*zip(X, Y))
+    # print(*zip(trans_x, trans_y))
+
+    w = []
+    dirs = {
+        # dir: x', y'
+        (-1, -1): "L",  # 本来の座標(x, y): (-1,  0), 変換後: (-1+0, -1-0)
+        (+1, +1): "R",  # 本来の座標(x, y): (+1,  0), 変換後: (+1+0, +1-0)
+        # 感覚と違うのは、変換の仕方
+        (+1, -1): "U",  # 本来の座標(x, y): ( 0, +1), 変換後: ( 0+1,  0-(-1))
+        (-1, +1): "D",  # 本来の座標(x, y): ( 0, -1), 変換後: ( 0-1,  0-(+1))
+    }
+    for x, y in zip(trans_x, trans_y):
+        x_sum = 0
+        y_sum = 0
+        _w = ""
+        for _d in d:
+            # 変換後の座標でx',y'を独立に求めている
+            if x_sum <= x:
+                x_dir = 1
+                x_sum += _d
+            else:
+                x_dir = -1
+                x_sum -= _d
+
+            if y_sum <= y:
+                y_dir = 1
+                y_sum += _d
+            else:
+                y_dir = -1
+                y_sum -= _d
+
+            _w += dirs[(x_dir, y_dir)]
+
+        w.append(_w)
+
+    return w
+
+
+def no_transform_xy(N, X, Y, d):
+    """
+    こっちのほうが分かりやすい気がした
+    マンハッタン距離の一方向移動性質, 近くなりやすいほうから移動する
+    """
+    w = []
+    for x, y in zip(X, Y):
+        x_sum, y_sum = 0, 0
+        _w = ""
+        for _d in d:
+            # 変化量の大きい方を優先する
+            if abs(x_sum - x) >= abs(y_sum - y):
+                if x_sum >= x:
+                    x_sum -= _d
+                    _w += "L"
+                else:
+                    x_sum += _d
+                    _w += "R"
+            else:
+                if y_sum >= y:
+                    y_sum -= _d
+                    _w += "D"
+                else:
+                    y_sum += _d
+                    _w += "U"
+
+        w.append(_w)
+
+    return w
 
 
 if __name__ == '__main__':
