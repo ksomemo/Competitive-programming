@@ -332,6 +332,167 @@ def ncr2(n, r):
     return f(n) // f(n - r) // f(r)
 
 
+def nhr(n, r):
+    """combination with repetitions"""
+    return ncr(n + r - 1, r)
+
+
+def facotr_counts(M):
+    """factorize とは違ってコンパクトにまとめた
+    """
+    i = 2
+    rest_M = M
+    counts = {}
+    while i ** 2 <= rest_M:
+        div_count = 0
+        while rest_M % i == 0:
+            div_count += 1
+            rest_M //= i
+
+        if div_count > 0:
+            counts[i] = div_count
+
+        i += 1
+
+    if rest_M != 1:
+        counts[rest_M] = 1
+
+    return counts
+
+
+def calc_comb(n, r, mod=10 ** 9 + 7):
+    if r > n - r:
+        return calc_comb(n, n - r)
+
+    ans_mul = 1
+    ans_div = 1
+
+    for i in range(r):
+        # n! / (n - r)!
+        ans_mul = ans_mul * (n - i) % mod
+        # r!
+        ans_div = ans_div * (i + 1) % mod
+
+    # k^(-1) ≡ k^(n-2) (mod n)
+    return ans_mul * mod_pow(ans_div, mod - 2) % mod
+
+
+def mod_pow(a, p, mod=10 ** 9 + 7):
+    if p == 0:
+        return 1
+
+    if p % 2 == 0:
+        half_p = p // 2
+        half = mod_pow(a, half_p)
+        return half ** 2 % mod
+    else:
+        return a * mod_pow(a, p - 1) % mod
+
+
+def mod_pow_bit(a, p, mod=10 ** 9 + 7):
+    """
+    http://keita-matsushita.hatenablog.com/entry/2016/12/05/184011
+    """
+    ans = 1
+    while p > 0:
+        if (p & 1) == 1:
+            ans = ans * a % mod
+
+        a = a ** 2 % mod
+        p >>= 1
+
+    return ans
+
+
+def mod_for_minus(x, m):
+    """python では問題ないが、cppなどでは負に対応していない
+
+    #include <iostream>
+    using namespace std;
+
+    int main() {
+        int ans = ((-3 % 2) + 2) % 2;
+        cout << "  -3 % 2           = " << (-3 % 2) << endl;
+        cout << "  +3 % 2           = " << (+3 % 2) << endl;
+        cout << "((-3 % 2) + 2) % 2 = " << ans << endl;
+        // -1, 1, 1
+        return 0;
+    }
+    """
+    return (x % m + m) % m
+
+
+def create_tables(N, MOD):
+    """
+    http://drken1215.hatenablog.com/entry/2018/06/08/210000
+    """
+    fact_mod = [0] * (N + 1)
+    simod = [0] * (N + 1)
+    fact_inv_mod = [0] * (N + 1)
+
+    fact_mod[0] = fact_mod[1] = 1
+    simod[0] = simod[1] = 1
+    fact_inv_mod[0] = fact_inv_mod[1] = 1
+
+    for i in range(2, N + 1):
+        # 階乗の累積積
+        fact_mod[i] = (fact_mod[i - 1] * i) % MOD
+
+        # TODO: これはなにを意味するのか？
+        simod[i] = MOD - simod[MOD % i] * (MOD // i) % MOD
+
+        # 最終的に使いたい階乗の逆元 (mod)
+        fact_inv_mod[i] = (fact_inv_mod[i - 1] * simod[i]) % MOD
+        # TODO: inv 配列が確実に不要な場面 とは？ (ここでのsimod)
+        # inv[n] を逆元計算によって計算しておく
+        # finv[i-1] = finv[i] * i % MOD によって finv 配列を後ろから計算していく
+
+    return fact_mod, fact_inv_mod
+
+
+def comb_mod(N, R, fact_mod, fact_inv_mod, MOD):
+    """
+    組合せ nCr: n! / ((n-r)! * r!)
+    上記のmodを逆元を使って表現
+
+    f[n] * f[r] % MOD * f[n-r] % MOD 
+    これのために事前にテーブルを作っていた
+    """
+    return fact_mod[N] * fact_inv_mod[N - R] * fact_inv_mod[R] % MOD
+
+
+def comb_with_fermat(N, R, MOD):
+    """フェルマーの小定理を用いてコンビネーションを計算する
+
+    http://keita-matsushita.hatenablog.com/entry/2016/12/05/184011
+    https://mathtrain.jp/fermat_petit
+        pが素数, aが任意の自然数のとき
+            競プロにおいて, p=10^9+7 よりpは素数
+        a^p ≡ a (mod p)
+            (a^p) % p = a % p
+            なので modの世界とか言われてるはず
+
+        a^(p-1) ≡ 1    (mod p)
+        a^(p-2) ≡ a^-1 (mod p)
+            a と pが互いに素: (a ⊥ p)
+
+        この-1乗の部分にフェルマーの小定理を適用
+        nCr = n! * ((n - r)!)^(-1) * (r!)^(-1)
+        nCr (mod p)
+            =  n! * ((n - r)!)^(-1) * (r!)^(-1) (mod p)
+
+    https://www.youtube.com/watch?v=fYS-rAUSD5o
+    http://drken1215.hatenablog.com/entry/2018/06/08/210000
+    https://www37.atwiki.jp/uwicoder/pages/2118.html
+        nCkについては、因幡めぐるちゃんが制約別３パターンをツイート
+    """
+    fact_mod, fact_inv_mod = create_tables(N + 100, MOD)
+    ans = comb_mod(N, R, fact_mod, fact_inv_mod, MOD)
+    ans %= MOD
+
+    return ans
+
+
 def my_divmod(x, y):
     a = x // y
     b = x - a * y

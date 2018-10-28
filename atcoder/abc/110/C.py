@@ -1,3 +1,7 @@
+import string
+import pytest
+
+
 def main():
     """
     英小文字のみからなる文字列 S, T
@@ -16,18 +20,35 @@ def main():
     S = input()
     T = input()
 
-    ans = f(S, T)
+    # ans = f(S, T)
+    ans = editorial(S, T)
     print(ans)
 
 
-if False:
-    import pytest
+@pytest.mark.randomize(S=str, T=str, ncalls=10,
+                       min_length=10, max_length=10,
+                       str_attrs=("ascii_lowercase",))
+def test_f(S, T):
+    """自作関数は嘘解法だった
+    """
+    assert f(S, T) == editorial(S, T)
 
-    @pytest.mark.randomize(S=str, T=str,
-                           min_length=10, max_length=10,
-                           str_attrs=("ascii_lowercase",))
-    def test_f(S, T):
-        assert f(S, T)
+
+def editorial(S, T):
+    ss = [-1] * 26
+    ts = [-1] * 26
+    for c1, c2 in zip(S, T):
+        a = ord(c1) - ord("a")
+        b = ord(c2) - ord("a")
+
+        if ss[a] != 1 or ts[b] != 1:
+            if ss[a] != b or ts[b] != a:
+                return "No"
+        else:
+            ss[a] = b
+            ts[b] = a
+
+    return "Yes"
 
 
 def f(S, T):
@@ -55,7 +76,6 @@ def f(S, T):
         c->a, a->c: cba
         b->a, a->b: cab
     """
-    import string
     ds = {c: set() for c in string.ascii_lowercase}
     dt = {c: set() for c in string.ascii_lowercase}
     for c1, c2 in zip(S, T):
