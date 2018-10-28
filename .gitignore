@@ -8,3 +8,7 @@ __pycache__
 
 # C/C++
 a.out
+
+# other
+*.log
+
