@@ -22,6 +22,22 @@ def main():
     print(ans)
 
 
+def editorial(N, X):
+    layer, p_layer = layers(N)
+
+    def p(N, X):
+        if N == 0:
+            return int(X >= 1)
+        elif X <= 1 + layer[N-1]:
+            # 下バン + L-1下バーガー以下
+            return p(N-1, X-1)
+        else:
+            # (下バン, L-1下バーガー, 中パティ):OK + L-1上バーガーを試す
+            return p_layer[N-1] + 1 + p(N-1, X - 1 - layer[N-1] - 1)
+
+    return p(N, X)
+
+
 def layers(N):
     layer = [0] * (N + 1)
     layer[0] = 1
