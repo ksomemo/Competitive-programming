@@ -11,7 +11,93 @@ def main():
 
 
 def f(H, W, S):
+    ans1 = editorial(H, W, S)
+    ans2 = f_rec(H, W, S)
+
+    assert ans1 == ans2
+    return ans1
+
+
+def editorial(H, W, S):
+    """
+    ある地点からの黒と白のマスの数
+    黒から白への行き方は
+    黒の数から白の数
+    """
+    from collections import deque
+    di = [1, 0, -1, 0]
+    dj = [0, 1, 0, -1]
+    color = [[S[i][j] == "#" for j in range(W)]
+             for i in range(H)]
+    used = [[False] * W for i in range(H)]
+
     ans = 0
+    for i in range(H):
+        for j in range(W):
+            if used[i][j]:
+                continue
+            used[i][j] = True
+
+            b, w = 0, 0
+            que = deque([(i, j)])
+            while que:
+                ci, cj = que.pop()
+                if color[ci][cj]:
+                    b += 1
+                else:
+                    w += 1
+
+                for d in range(4):
+                    ni = ci + di[d]
+                    nj = cj + dj[d]
+                    in_range = 0 <= ni < H and 0 <= nj < W
+                    if not in_range:
+                        continue
+                    if used[ni][nj]:
+                        continue
+                    if color[ci][cj] == color[ni][nj]:
+                        continue
+
+                    used[ni][nj] = True
+                    que.append((ni, nj))
+
+            ans += b * w
+
+    return ans
+
+
+def f_rec(H, W, S):
+    import sys
+    sys.setrecursionlimit(10 ** 9)
+    dx = [0, 0, 1, -1]
+    dy = [1, -1, 0, 0]
+
+    def rec(h, w, vis):
+        vis[h][w] = True
+        bl, wh = 0, 0
+        if S[h][w] == "#":
+            bl += 1
+        else:
+            wh += 1
+
+        for i in range(4):
+            ny = h + dy[i]
+            nx = w + dx[i]
+            in_range = 0 <= ny < H and 0 <= nx < W
+            if in_range and not vis[ny][nx] and S[ny][nx] != S[h][w]:
+                n_bl, n_wh = rec(ny, nx, vis)
+                bl += n_bl
+                wh += n_wh
+
+        return bl, wh
+
+    vis = [[False] * W for _ in range(H)]
+    ans = 0
+    for h in range(H):
+        for w in range(W):
+            bl, wh = rec(h, w, vis)
+            ans += bl * wh
+
     return ans
 
 
@@ -67,7 +153,7 @@ def TLE_pypy3(H, W, S):
 
     ans = 0
     # #からなので、候補
-    for (y, x), n in blacks.items():
+    for (y, x), _ in blacks.items():
         # 黒から辿り、１ターンでー候補白を見つけ黒へたどる、次のターンの黒を見つける
         bs = [(y, x)]
         # 辿った黒白のマスをまた辿らないようにする
