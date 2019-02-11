@@ -25,15 +25,16 @@ from statistics import mean, median, mode
 from math import factorial, hypot as euclidean_dist
 
 try:
-    # py3.5
+    # 最大公約数: greatest common divisor
+    # py3.5+
     from math import gcd
-except:
+except ImportError:
     from fractions import gcd
 
 try:
-    # py3.6
+    # py3.6+
     from statistics import harmonic_mean
-except:
+except ImportError:
     def harmonic_mean(data):
         from fractions import Fraction
         n = len(data)
@@ -57,6 +58,7 @@ def my_gcd(a, b):
 
 
 def lcm(x, y):
+    """最小公倍数: least common multiple"""
     return x * y // gcd(x, y)
 
 
