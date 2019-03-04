@@ -8,12 +8,31 @@ def main():
     print(ans)
 
 
+def f_stack(S):
+    stack = []
+    ans = 0
+    for c in S:
+        if stack and stack[-1] != c:
+            ans += 2
+            stack.pop()
+        else:
+            stack.append(c)
+    return ans
+
+
 def f(S):
     """
     A,B,Cそれぞれが存在していたら終了
     存在しない場合
     diff をとる
     """
+    c = Counter(S)
+    ans = min(c['0'], c['1']) * 2
+    return ans
+    # return WA3(S)
+
+
+def WA3(S):
     b = []
     a = 0
     for c in S:
